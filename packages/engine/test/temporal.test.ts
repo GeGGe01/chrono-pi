@@ -4,7 +4,7 @@ import { clearCalendars, listCalendars } from '../src/calendars/registry';
 import {
   gregorian,
   hebrew,
-  islamicTabular,
+  islamic,
   persian,
   registerTemporalCalendars,
 } from '../src/calendars/temporal';
@@ -25,21 +25,21 @@ describe('Temporal-backed calendars at the anchor 2000-01-01', () => {
     expect(persian.fields(anchor)).toMatchObject({ year: 1378, month: 10, day: 11 });
   });
 
-  it('islamic-tbla reads 25 Ramadan 1420 (tabular, astronomical epoch)', () => {
-    expect(islamicTabular.fields(anchor)).toMatchObject({ year: 1420, month: 9, day: 25 });
+  it('islamic (civil epoch) reads 24 Ramadan 1420', () => {
+    expect(islamic.fields(anchor)).toMatchObject({ year: 1420, month: 9, day: 24 });
   });
 });
 
 describe('seed calendar metadata', () => {
   it('are all canonical and independent gears', () => {
-    for (const calendar of [gregorian, hebrew, persian, islamicTabular]) {
+    for (const calendar of [gregorian, hebrew, persian, islamic]) {
       expect(calendar.tier).toBe('canonical');
       expect(calendar.independent).toBe(true);
     }
   });
 
-  it('pins the tabular Islamic id explicitly', () => {
-    expect(islamicTabular.id).toBe('islamic-tbla');
+  it('pins the Islamic calendar id explicitly', () => {
+    expect(islamic.id).toBe('islamic');
   });
 });
 
@@ -53,7 +53,7 @@ describe('registerTemporalCalendars', () => {
     expect(listCalendars().map((c) => c.id).sort()).toEqual([
       'gregorian',
       'hebrew',
-      'islamic-tbla',
+      'islamic',
       'persian',
     ]);
   });

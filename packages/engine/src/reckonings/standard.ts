@@ -55,7 +55,14 @@ export const yyyymmdd = dateReckoning('gregorian', 'yyyy-mm-dd');
 
 // Calendars whose Gregorian/Julian-style date the table reads via mm-dd-yy and yy-m-dd. ISO yyyy-mm-dd
 // is Gregorian-only (the only four-digit-year reading in range). The set grows as batches land.
-const DATE_CALENDARS = ['gregorian', 'julian', 'holocene'] as const;
+const DATE_CALENDARS = [
+  'gregorian',
+  'julian',
+  'holocene',
+  'hebrew',
+  'persian',
+  'islamic',
+] as const;
 
 export const standardReckonings: readonly Reckoning[] = [
   ...DATE_CALENDARS.flatMap((calendar) => [
