@@ -21,7 +21,17 @@ export const REFERENCE_ENTRIES: ReferenceEntry[] = [
   { isoDate: '2131-04-15', calendar: 'gregorian', format: 'yy-m-dd', sequence: '31415', fullYear: 2131, tier: 'canonical' },
   { isoDate: '2215-03-14', calendar: 'gregorian', format: 'mm-dd-yy', sequence: '31415', fullYear: 2215, tier: 'canonical' },
 
-  // holocene — co-reads with gregorian (year + 10000); pending a holocene reckoning
+  // julian (Richards arithmetic; 12–13 days behind Gregorian in this window)
+  { isoDate: '1831-04-27', calendar: 'julian', format: 'yy-m-dd', sequence: '31415', fullYear: 1831, tier: 'canonical' },
+  { isoDate: '1915-03-27', calendar: 'julian', format: 'mm-dd-yy', sequence: '31415', fullYear: 1915, tier: 'canonical' },
+  { isoDate: '1931-04-28', calendar: 'julian', format: 'yy-m-dd', sequence: '31415', fullYear: 1931, tier: 'canonical' },
+  { isoDate: '2015-03-27', calendar: 'julian', format: 'mm-dd-yy', sequence: '31415', fullYear: 2015, tier: 'canonical' },
+  { isoDate: '2031-04-28', calendar: 'julian', format: 'yy-m-dd', sequence: '31415', fullYear: 2031, tier: 'canonical' },
+  { isoDate: '2115-03-28', calendar: 'julian', format: 'mm-dd-yy', sequence: '31415', fullYear: 2115, tier: 'canonical' },
+  { isoDate: '2131-04-29', calendar: 'julian', format: 'yy-m-dd', sequence: '31415', fullYear: 2131, tier: 'canonical' },
+  { isoDate: '2215-03-29', calendar: 'julian', format: 'mm-dd-yy', sequence: '31415', fullYear: 2215, tier: 'canonical' },
+
+  // holocene — co-reads with gregorian (year + 10000)
   { isoDate: '1915-03-14', calendar: 'holocene', format: 'mm-dd-yy', sequence: '31415', fullYear: 11915, tier: 'canonical' },
   { isoDate: '1931-04-15', calendar: 'holocene', format: 'yy-m-dd', sequence: '31415', fullYear: 11931, tier: 'canonical' },
   { isoDate: '2015-03-14', calendar: 'holocene', format: 'mm-dd-yy', sequence: '31415', fullYear: 12015, tier: 'canonical' },
