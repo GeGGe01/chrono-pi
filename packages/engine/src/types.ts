@@ -33,3 +33,13 @@ export interface Reckoning {
   timeExtends: boolean; // whether the π-instant extends the digit string
   read(fields: CalendarFields, jdn: JDN): PiRead;
 }
+
+export interface PerfectDay {
+  jdn: JDN;
+  isoDate: string; // 'YYYY-MM-DD'
+  calendarId: string;
+  reckoningId: string;
+  digits: string; // the matched digit string, including any π-instant extension
+  depth: number; // π-prefix length matched
+  tier: Tier;
+}
