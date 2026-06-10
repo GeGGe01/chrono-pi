@@ -1,0 +1,52 @@
+name: Bug report
+description: Report a bug
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report. Be concrete and include reproduction.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened? What did you expect?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Steps to reproduce, preferably minimal
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: date-context
+    attributes:
+      label: Date context (for a wrong or missing pi-day)
+      description: If this is about a date, give the calendar, the format, the expected reading, and the convention you compare against.
+      placeholder: "e.g. islamic-tbla, MM-DD-YY, expected 3:14:15, tabular Hijri"
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: |
+        - Version / commit:
+        - Node version:
+        - pnpm version:
+        - OS:
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      render: shell
