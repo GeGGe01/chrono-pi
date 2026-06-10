@@ -8,8 +8,6 @@ chrono-pi is a TypeScript monorepo that finds every day on which an attested cal
 **CI/CD flows:** See `06-ci-cd-plan.md`.
 **Loop, reporting, follow-up:** See `07-agent-loop.md`.
 
-(`05`–`07` are generated in Phase B. Until they exist, follow the interim conventions below.)
-
 ## Roles
 
 ### Implementation agent
@@ -35,20 +33,11 @@ chrono-pi is a TypeScript monorepo that finds every day on which an attested cal
 **Init steps:**
 1. Read `01-whitepaper.md` to understand what is being built and the core definitions.
 2. Read `03-short-horizon.md` to load the contracts and the step list.
-3. Read `05-engineering-handbook.md` for the rules (or the interim conventions below until it exists).
-4. Read `07-agent-loop.md` for the reporting structure (or report in chat until it exists).
+3. Read `05-engineering-handbook.md` for the branch, commit, PR, and release rules.
+4. Read `07-agent-loop.md` for the reporting structure.
 5. Run `pnpm install` to verify the environment.
 6. Begin Step 1 of the short horizon.
 7. Report after each completed step.
-
-## Interim conventions (until `05`–`07` exist)
-
-These carry the operator's standing preferences so the build is usable before Phase B formalises them in `05`:
-
-- All committed text — documentation, templates, comments, commit messages — is in English.
-- Comments state intention, not implementation, in at most one and a half sentences.
-- Commit subjects state the effect, not the implementation, in at most one and a half sentences, in Conventional Commits form.
-- When handing the operator a command to run and read back, clear the terminal before the command so its output starts clean.
 
 ## Error handling
 

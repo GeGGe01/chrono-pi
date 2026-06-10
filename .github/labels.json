@@ -1,0 +1,17 @@
+[
+  { "name": "bug", "color": "d73a4a", "description": "Something is not working" },
+  { "name": "enhancement", "color": "a2eeef", "description": "New feature or improvement" },
+  { "name": "documentation", "color": "0075ca", "description": "Documentation improvements" },
+  { "name": "calendar", "color": "5319e7", "description": "A calendar implementation or its convention" },
+  { "name": "reckoning", "color": "1d76db", "description": "A date-format reckoning or read rule" },
+  { "name": "collision", "color": "0e8a16", "description": "Double or triple pi-day detection" },
+  { "name": "convention-variance", "color": "fbca04", "description": "A date that differs from the reference table" },
+  { "name": "site", "color": "c2e0c6", "description": "The countdown website" },
+  { "name": "sync", "color": "bfdadc", "description": "The Google Calendar integration" },
+  { "name": "dependencies", "color": "0366d6", "description": "Dependency updates" },
+  { "name": "security", "color": "ee0701", "description": "Security-related" },
+  { "name": "breaking-change", "color": "b60205", "description": "Breaks backwards compatibility" },
+  { "name": "duplicate", "color": "cfd3d7", "description": "Duplicate of another issue or PR" },
+  { "name": "question", "color": "d876e3", "description": "More information needed" },
+  { "name": "needs-triage", "color": "ededed", "description": "Not yet triaged" }
+]

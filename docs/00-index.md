@@ -21,7 +21,7 @@ chrono-pi finds every day on which an attested calendar-and-format reads out the
 | `05-engineering-handbook.md` | Branch, commit, PR, release, maintenance rules | Phase B |
 | `06-ci-cd-plan.md` | Workflows, deploy, rollback, observability | Phase B |
 | `07-agent-loop.md` | Loop cadence, reporting, escalation, termination | Phase B |
-| `bootstrap/` | Importable repo artifacts (LICENSE, workflows, templates) | Phase B |
+| `.github/` | Repo automation and config (workflows, templates, settings) | Imported |
 
 ## Reading order
 
@@ -31,4 +31,4 @@ For the implementation agent: follow the init sequence in `04-agent-instructions
 
 ## Next step
 
-Phase A is complete. Create the repository, then return with written confirmation that it exists. That confirmation, together with the Phase A → Phase B confidentiality checklist (repo namespace, visibility, and which identifiers may appear in committed files), starts Phase B and the generation of `05`–`07` plus the `bootstrap/` folder.
+Phase A is complete. Create the repository, then return with written confirmation that it exists. That confirmation, together with the Phase A → Phase B confidentiality checklist (repo namespace, visibility, and which identifiers may appear in committed files), starts Phase B and the generation of `05`–`07` plus the `.github/` config.
