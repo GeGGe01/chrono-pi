@@ -9,9 +9,9 @@ import { scan } from '../src/scan';
 // literal midnight-second model of Steps 6/8 cannot reach. Reproducing it needs an instant-aware Unix
 // reckoning — recorded as a Phase 1 finding rather than silently changing the reckoning.
 const KNOWN_PERFECT_DAYS = [
-  { iso: '2015-03-14', calendarId: 'gregorian', reckoningId: 'mm-dd-yy', depth: 13 },
-  { iso: '2031-04-15', calendarId: 'gregorian', reckoningId: 'yy-m-dd', depth: 13 },
-  { iso: '3141-05-09', calendarId: 'gregorian', reckoningId: 'yyyy-mm-dd', depth: 6 },
+  { iso: '2015-03-14', calendarId: 'gregorian', reckoningId: 'gregorian/mm-dd-yy', depth: 13 },
+  { iso: '2031-04-15', calendarId: 'gregorian', reckoningId: 'gregorian/yy-m-dd', depth: 13 },
+  { iso: '3141-05-09', calendarId: 'gregorian', reckoningId: 'gregorian/yyyy-mm-dd', depth: 6 },
 ] as const;
 
 describe('smoke: known perfect days', () => {

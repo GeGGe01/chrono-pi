@@ -5,7 +5,7 @@ import { scan } from '../src/scan';
 describe('scan', () => {
   it('finds the Gregorian mm-dd-yy perfect day on 2015-03-14', () => {
     const days = scan('2015-01-01', '2015-12-31');
-    const piDay = days.find((d) => d.isoDate === '2015-03-14' && d.reckoningId === 'mm-dd-yy');
+    const piDay = days.find((d) => d.isoDate === '2015-03-14' && d.reckoningId === 'gregorian/mm-dd-yy');
 
     expect(piDay).toBeDefined();
     expect(piDay?.calendarId).toBe('gregorian');

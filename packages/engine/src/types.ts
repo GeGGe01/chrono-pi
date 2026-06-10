@@ -26,8 +26,9 @@ export interface PiRead {
 }
 
 export interface Reckoning {
-  id: string; // 'mm-dd-yy', 'yyyy-mm-dd', 'yy-m-dd', 'unix', ...
+  id: string; // unique, '<calendarId>/<format>', e.g. 'gregorian/mm-dd-yy'
   calendarId: string;
+  format: string; // the field-order format, e.g. 'mm-dd-yy' — shared across calendars
   tier: Tier;
   minDepth: number; // qualifying floor (default 5)
   timeExtends: boolean; // whether the π-instant extends the digit string

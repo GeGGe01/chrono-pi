@@ -8,7 +8,14 @@ import { VARIANCES } from './fixtures/variances';
 
 // (calendar/format) pairs the engine is expected to reproduce at this point in the Phase 2 build.
 // The set grows as each batch lands; everything else is reported pending, not failed.
-const IMPLEMENTED = new Set(['gregorian/mm-dd-yy', 'gregorian/yy-m-dd']);
+const IMPLEMENTED = new Set([
+  'gregorian/mm-dd-yy',
+  'gregorian/yy-m-dd',
+  'julian/mm-dd-yy',
+  'julian/yy-m-dd',
+  'holocene/mm-dd-yy',
+  'holocene/yy-m-dd',
+]);
 
 const pairKey = (entry: ReferenceEntry): string => `${entry.calendar}/${entry.format}`;
 
@@ -17,10 +24,11 @@ beforeAll(() => {
 });
 
 function engineReads(entry: ReferenceEntry) {
+  const reckoningId = `${entry.calendar}/${entry.format}`;
   return scan(entry.isoDate, entry.isoDate).find(
     (day) =>
       day.calendarId === entry.calendar &&
-      day.reckoningId === entry.format &&
+      day.reckoningId === reckoningId &&
       day.digits.startsWith(entry.sequence),
   );
 }
