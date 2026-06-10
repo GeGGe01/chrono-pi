@@ -1,0 +1,30 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Secrets and credentials
+.env
+.env.local
+.env.*.local
+*.pem
+google-credentials.json
+token.json
+
+# Node / TypeScript
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Astro
+apps/site/.astro/
+apps/site/dist/
+
+# pnpm
+.pnpm-store/
