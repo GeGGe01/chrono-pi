@@ -18,3 +18,18 @@ export interface Calendar {
   independent: boolean; // counts as a distinct gear for collisions
   fields(jdn: JDN): CalendarFields;
 }
+
+export interface PiRead {
+  digits: string; // concatenated field digits, no separators
+  clockDigits?: string; // digits the π-instant adds after the date
+  label: string; // human label, e.g. 'gregorian · MM-DD-YY → 31:4:15'
+}
+
+export interface Reckoning {
+  id: string; // 'mm-dd-yy', 'yyyy-mm-dd', 'yy-m-dd', 'unix', ...
+  calendarId: string;
+  tier: Tier;
+  minDepth: number; // qualifying floor (default 5)
+  timeExtends: boolean; // whether the π-instant extends the digit string
+  read(fields: CalendarFields, jdn: JDN): PiRead;
+}
