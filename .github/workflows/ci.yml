@@ -29,16 +29,16 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm -r lint
+        run: pnpm -r --if-present lint
 
       - name: Typecheck
-        run: pnpm -r typecheck
+        run: pnpm -r --if-present typecheck
 
       - name: Test
-        run: pnpm -r test -- --coverage
+        run: pnpm -r --if-present test -- --coverage
 
       - name: Build
-        run: pnpm -r build
+        run: pnpm -r --if-present build
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
