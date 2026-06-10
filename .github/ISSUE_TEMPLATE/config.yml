@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/GeGGe01/chrono-pi/security/advisories/new
+    about: Report security issues privately. Do not use issues.
+  - name: Questions and discussion
+    url: https://github.com/GeGGe01/chrono-pi/discussions
+    about: General questions and discussion
