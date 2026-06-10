@@ -16,7 +16,7 @@ export {
 export {
   gregorian,
   hebrew,
-  islamicTabular,
+  islamic,
   persian,
   registerTemporalCalendars,
   temporalCalendars,

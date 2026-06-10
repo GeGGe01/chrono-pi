@@ -15,9 +15,16 @@ const IMPLEMENTED = new Set([
   'julian/yy-m-dd',
   'holocene/mm-dd-yy',
   'holocene/yy-m-dd',
+  'hebrew/mm-dd-yy',
+  'hebrew/yy-m-dd',
+  'persian/mm-dd-yy',
+  'persian/yy-m-dd',
+  'islamic/mm-dd-yy',
+  'islamic/yy-m-dd',
 ]);
 
 const pairKey = (entry: ReferenceEntry): string => `${entry.calendar}/${entry.format}`;
+const entryKey = (entry: ReferenceEntry): string => `${entry.isoDate}/${entry.calendar}/${entry.format}`;
 
 beforeAll(() => {
   seedDefaults();
@@ -35,14 +42,13 @@ function engineReads(entry: ReferenceEntry) {
 
 describe('reference table regression', () => {
   for (const entry of REFERENCE_ENTRIES) {
-    const key = pairKey(entry);
     const title = `${entry.isoDate} ${entry.calendar}/${entry.format} → ${entry.sequence}`;
 
-    if (VARIANCES.has(key)) {
+    if (VARIANCES.has(entryKey(entry))) {
       it.skip(`[variance] ${title}`, () => {});
       continue;
     }
-    if (!IMPLEMENTED.has(key)) {
+    if (!IMPLEMENTED.has(pairKey(entry))) {
       it.skip(`[pending] ${title}`, () => {});
       continue;
     }
@@ -60,9 +66,8 @@ describe('reference table regression', () => {
     let variance = 0;
     let pending = 0;
     for (const entry of REFERENCE_ENTRIES) {
-      const key = pairKey(entry);
-      if (VARIANCES.has(key)) variance += 1;
-      else if (IMPLEMENTED.has(key)) reproduced += 1;
+      if (VARIANCES.has(entryKey(entry))) variance += 1;
+      else if (IMPLEMENTED.has(pairKey(entry))) reproduced += 1;
       else pending += 1;
     }
     console.log(
