@@ -148,6 +148,19 @@ export const REFERENCE_ENTRIES: ReferenceEntry[] = [
   { isoDate: '2078-04-28', calendar: 'roman', format: 'yy-m-dd', sequence: '31415', fullYear: 2831, tier: 'canonical' },
   { isoDate: '2178-04-28', calendar: 'roman', format: 'yy-m-dd', sequence: '31415', fullYear: 2931, tier: 'canonical' },
 
+  // julian-period (Gregorian months + 4713)
+  { isoDate: '1902-03-14', calendar: 'julian-period', format: 'mm-dd-yy', sequence: '31415', fullYear: 6615, tier: 'canonical' },
+  { isoDate: '2002-03-14', calendar: 'julian-period', format: 'mm-dd-yy', sequence: '31415', fullYear: 6715, tier: 'canonical' },
+  { isoDate: '2102-03-14', calendar: 'julian-period', format: 'mm-dd-yy', sequence: '31415', fullYear: 6815, tier: 'canonical' },
+  { isoDate: '2202-03-14', calendar: 'julian-period', format: 'mm-dd-yy', sequence: '31415', fullYear: 6915, tier: 'canonical' },
+  { isoDate: '1918-04-15', calendar: 'julian-period', format: 'yy-m-dd', sequence: '31415', fullYear: 6631, tier: 'canonical' },
+  { isoDate: '2018-04-15', calendar: 'julian-period', format: 'yy-m-dd', sequence: '31415', fullYear: 6731, tier: 'canonical' },
+  { isoDate: '2118-04-15', calendar: 'julian-period', format: 'yy-m-dd', sequence: '31415', fullYear: 6831, tier: 'canonical' },
+  { isoDate: '2218-04-15', calendar: 'julian-period', format: 'yy-m-dd', sequence: '31415', fullYear: 6931, tier: 'canonical' },
+
+  // mjd — day count; 1944-11-22 is MJD 31415, extended by the π-instant to depth 13
+  { isoDate: '1944-11-22', calendar: 'mjd', format: 'mjd', sequence: '31415', fullYear: 31415, tier: 'canonical' },
+
   // unix — instant-aware (the π-prefix second falls mid-day; .589 carries it to depth 13)
   { isoDate: '2069-07-21', calendar: 'unix', format: 'timestamp', sequence: '3141592653589', fullYear: 3141592653, tier: 'canonical' },
 ];

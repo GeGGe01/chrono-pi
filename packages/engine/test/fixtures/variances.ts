@@ -27,6 +27,10 @@ const ROMAN =
   'Roman (Julian + 753) is correct; the table assumes a constant 13-day Julian–Gregorian gap, but after ' +
   "2100 it widens to 14 days, so the table's far-future Gregorian date is one day early.";
 
+const MJD =
+  'Standard MJD (verified by 2000-01-01 = MJD 51544) puts MJD 31415 on 1944-11-21; the table dates it ' +
+  'one day late (1944-11-22, which is MJD 31416).';
+
 export const VARIANCES = new Map<string, string>([
   ['2036-06-04/persian/mm-dd-yy', PERSIAN],
   ['2052-07-06/persian/yy-m-dd', PERSIAN],
@@ -58,4 +62,6 @@ export const VARIANCES = new Map<string, string>([
 
   ['2162-03-27/roman/mm-dd-yy', ROMAN],
   ['2178-04-28/roman/yy-m-dd', ROMAN],
+
+  ['1944-11-22/mjd/mjd', MJD],
 ]);

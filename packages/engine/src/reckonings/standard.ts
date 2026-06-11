@@ -85,7 +85,21 @@ const DATE_CALENDARS = [
   'assyrian',
   'armenian',
   'roman',
+  'julian-period',
 ] as const;
+
+// Modified Julian Date: the day count rendered as digits; the standard π-instant's fractional day extends it.
+export const mjdReckoning: Reckoning = {
+  id: 'mjd/mjd',
+  calendarId: 'mjd',
+  format: 'mjd',
+  tier: 'canonical',
+  minDepth: 5,
+  timeExtends: true,
+  read(fields: CalendarFields) {
+    return { digits: String(fields.year), label: `mjd · ${fields.year}` };
+  },
+};
 
 export const standardReckonings: readonly Reckoning[] = [
   ...DATE_CALENDARS.flatMap((calendar) => [
@@ -94,6 +108,7 @@ export const standardReckonings: readonly Reckoning[] = [
   ]),
   yyyymmdd,
   unixTimestamp,
+  mjdReckoning,
 ];
 
 export function registerStandardReckonings(): void {

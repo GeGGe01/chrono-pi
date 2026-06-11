@@ -37,6 +37,9 @@ const IMPLEMENTED = new Set([
   'armenian/yy-m-dd',
   'roman/mm-dd-yy',
   'roman/yy-m-dd',
+  'julian-period/mm-dd-yy',
+  'julian-period/yy-m-dd',
+  'mjd/mjd',
   'unix/timestamp',
 ]);
 
