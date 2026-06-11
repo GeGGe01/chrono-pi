@@ -1,6 +1,7 @@
 // The engine's public surface: the scan, the π matcher, the JDN axis, the registries, the seed
 // calendars and reckonings, and the shared contract types.
 export { scan, seedDefaults } from './scan';
+export { findCollisions, type Collision } from './collisions';
 export { PI_DIGITS, matchDepth } from './pi';
 export { eachJdn, isoToJdn, jdnToIso } from './jdn';
 export { clockDigits, FRACTIONAL_PI_INSTANT, STANDARD_PI_INSTANT } from './clock';
