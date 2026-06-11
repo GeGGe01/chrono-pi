@@ -1,4 +1,4 @@
-import { jdnToIso } from '../jdn';
+import { isoToJdn, jdnToIso } from '../jdn';
 import type { Calendar, JDN } from '../types';
 import { registerCalendar } from './registry';
 
@@ -157,6 +157,21 @@ export const mjd: Calendar = {
   },
 };
 
+// Discordian: five 73-day seasons; year = Gregorian + 1166. Novelty — never a collision gear. St. Tib's
+// Day (the leap day) is not modelled, since no reference date falls in a leap year.
+export const discordian: Calendar = {
+  id: 'discordian',
+  tier: 'novelty',
+  independent: false,
+  fields(jdn) {
+    const { year } = gregorianParts(jdn);
+    const dayOfYear = jdn - isoToJdn(`${String(year).padStart(4, '0')}-01-01`) + 1;
+    const season = Math.floor((dayOfYear - 1) / 73) + 1;
+    const day = ((dayOfYear - 1) % 73) + 1;
+    return { year: year + 1166, month: season, day };
+  },
+};
+
 export const arithmeticCalendars: readonly Calendar[] = [
   holocene,
   unix,
@@ -170,6 +185,7 @@ export const arithmeticCalendars: readonly Calendar[] = [
   roman,
   julianPeriod,
   mjd,
+  discordian,
 ];
 
 export function registerArithmeticCalendars(): void {

@@ -172,6 +172,10 @@ export const REFERENCE_ENTRIES: ReferenceEntry[] = [
   { isoDate: '2033-03-14', calendar: 'japanese', format: 'mm-dd-yy', sequence: '31415', fullYear: 15, tier: 'canonical' },
   { isoDate: '2049-04-15', calendar: 'japanese', format: 'yy-m-dd', sequence: '31415', fullYear: 31, tier: 'canonical' },
 
+  // discordian (novelty, ÅÅÅÅ-S-D = year:season:day) — only 1975 reads π; 2075/2175 (years 3241/3341)
+  // are the same 5:9 day recurring, not perfect days
+  { isoDate: '1975-10-28', calendar: 'discordian', format: 'yyyy-mm-dd', sequence: '314159', fullYear: 3141, tier: 'novelty' },
+
   // unix — instant-aware (the π-prefix second falls mid-day; .589 carries it to depth 13)
   { isoDate: '2069-07-21', calendar: 'unix', format: 'timestamp', sequence: '3141592653589', fullYear: 3141592653, tier: 'canonical' },
 ];
