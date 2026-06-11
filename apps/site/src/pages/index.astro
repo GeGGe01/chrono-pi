@@ -1,18 +1,35 @@
 ---
-// Phase 5 scaffold: a minimal page that builds. The five sections land in later steps.
+import { getCollisions, getPerfectDays } from 'chrono-pi-data';
+
+import Countdown from '../components/Countdown.astro';
+import HallOfFame from '../components/HallOfFame.astro';
+import PiStream from '../components/PiStream.astro';
+import Timeline from '../components/Timeline.astro';
+import UpcomingQueue from '../components/UpcomingQueue.astro';
+import Layout from '../layouts/Layout.astro';
+import { nextPerfectDay, upcomingDays } from '../lib/view';
+
+const { window: lifeWindow, days } = getPerfectDays();
+const collisions = getCollisions();
+
+// Build-time "now" in UTC; the countdown island recomputes live in the visitor's local time.
+const now = new Date().toISOString().slice(0, 10);
+const next = nextPerfectDay(days, now);
+const upcoming = upcomingDays(days, now, 12);
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>chrono-pi</title>
-    <meta name="description" content="Every day a calendar reads the digits of π." />
-  </head>
-  <body>
-    <main>
-      <h1>chrono-pi</h1>
-    </main>
-  </body>
-</html>
+<Layout title="chrono-pi — the next perfect pi-day">
+  {
+    next ? (
+      <Fragment>
+        <Countdown day={next} />
+        <PiStream depth={next.depth} />
+      </Fragment>
+    ) : (
+      <p>No more perfect pi-days inside the lifetime window.</p>
+    )
+  }
+  <UpcomingQueue days={upcoming} />
+  <Timeline days={days} windowStart={lifeWindow.start} windowEnd={lifeWindow.end} nowIso={now} />
+  <HallOfFame collisions={collisions} />
+</Layout>
