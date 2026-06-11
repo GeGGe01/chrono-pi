@@ -161,6 +161,17 @@ export const REFERENCE_ENTRIES: ReferenceEntry[] = [
   // mjd — day count; 1944-11-22 is MJD 31415, extended by the π-instant to depth 13
   { isoDate: '1944-11-22', calendar: 'mjd', format: 'mjd', sequence: '31415', fullYear: 31415, tier: 'canonical' },
 
+  // japanese (Temporal 'japanese', era year — Meiji / Taishō / Shōwa / Heisei / Reiwa)
+  { isoDate: '1882-03-14', calendar: 'japanese', format: 'mm-dd-yy', sequence: '31415', fullYear: 15, tier: 'canonical' },
+  { isoDate: '1898-04-15', calendar: 'japanese', format: 'yy-m-dd', sequence: '31415', fullYear: 31, tier: 'canonical' },
+  { isoDate: '1926-03-14', calendar: 'japanese', format: 'mm-dd-yy', sequence: '31415', fullYear: 15, tier: 'canonical' },
+  { isoDate: '1940-03-14', calendar: 'japanese', format: 'mm-dd-yy', sequence: '31415', fullYear: 15, tier: 'canonical' },
+  { isoDate: '1956-04-15', calendar: 'japanese', format: 'yy-m-dd', sequence: '31415', fullYear: 31, tier: 'canonical' },
+  { isoDate: '2003-03-14', calendar: 'japanese', format: 'mm-dd-yy', sequence: '31415', fullYear: 15, tier: 'canonical' },
+  { isoDate: '2019-04-15', calendar: 'japanese', format: 'yy-m-dd', sequence: '31415', fullYear: 31, tier: 'canonical' },
+  { isoDate: '2033-03-14', calendar: 'japanese', format: 'mm-dd-yy', sequence: '31415', fullYear: 15, tier: 'canonical' },
+  { isoDate: '2049-04-15', calendar: 'japanese', format: 'yy-m-dd', sequence: '31415', fullYear: 31, tier: 'canonical' },
+
   // unix — instant-aware (the π-prefix second falls mid-day; .589 carries it to depth 13)
   { isoDate: '2069-07-21', calendar: 'unix', format: 'timestamp', sequence: '3141592653589', fullYear: 3141592653, tier: 'canonical' },
 ];

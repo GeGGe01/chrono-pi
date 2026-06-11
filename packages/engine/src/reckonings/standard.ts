@@ -5,12 +5,12 @@ import { registerReckoning } from './registry';
 // A reckoning renders its fields as their natural decimal digits, in a declared order, with no
 // separators and no leading zeros — exactly what turns 3/14/15 into 31415.
 type DateFormat = 'mm-dd-yy' | 'yy-m-dd' | 'yyyy-mm-dd';
-type FieldOrder = (fields: CalendarFields) => number[];
+type FieldOrder = (year: number, fields: CalendarFields) => number[];
 
 const ORDERS: Record<DateFormat, FieldOrder> = {
-  'mm-dd-yy': (f) => [f.month, f.day, f.year % 100], // American middle-endian: 3/14/15 → 31415
-  'yy-m-dd': (f) => [f.year % 100, f.month, f.day], // inverted little-endian: 31/4/15 → 31415
-  'yyyy-mm-dd': (f) => [f.year, f.month, f.day], // ISO big-endian: 3141/5/9 → 314159
+  'mm-dd-yy': (year, f) => [f.month, f.day, year % 100], // American middle-endian: 3/14/15 → 31415
+  'yy-m-dd': (year, f) => [year % 100, f.month, f.day], // inverted little-endian: 31/4/15 → 31415
+  'yyyy-mm-dd': (year, f) => [year, f.month, f.day], // ISO big-endian: 3141/5/9 → 314159
 };
 
 function digits(values: number[]): string {
@@ -18,18 +18,24 @@ function digits(values: number[]): string {
 }
 
 // A date reckoning reads one calendar's fields via a named field-order format. The same format applies
-// to many calendars, so the id is compound (`<calendarId>/<format>`) while `format` stays shared.
-export function dateReckoning(calendarId: string, format: DateFormat, tier: Tier = 'canonical'): Reckoning {
+// to many calendars, so the id is compound (`<calendarId>/<format>`) while `format` stays shared. Era
+// calendars (Japanese) render the era year rather than the continuous year.
+export function dateReckoning(
+  calendarId: string,
+  format: DateFormat,
+  options: { tier?: Tier; eraYear?: boolean } = {},
+): Reckoning {
   const order = ORDERS[format];
   return {
     id: `${calendarId}/${format}`,
     calendarId,
     format,
-    tier,
+    tier: options.tier ?? 'canonical',
     minDepth: 5,
     timeExtends: true,
     read(fields: CalendarFields) {
-      const rendered = digits(order(fields));
+      const year = options.eraYear ? (fields.eraYear ?? fields.year) : fields.year;
+      const rendered = digits(order(year, fields));
       return { digits: rendered, label: `${calendarId} · ${format} → ${rendered}` };
     },
   };
@@ -106,6 +112,8 @@ export const standardReckonings: readonly Reckoning[] = [
     dateReckoning(calendar, 'mm-dd-yy'),
     dateReckoning(calendar, 'yy-m-dd'),
   ]),
+  dateReckoning('japanese', 'mm-dd-yy', { eraYear: true }),
+  dateReckoning('japanese', 'yy-m-dd', { eraYear: true }),
   yyyymmdd,
   unixTimestamp,
   mjdReckoning,

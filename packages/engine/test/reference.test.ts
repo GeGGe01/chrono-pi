@@ -40,6 +40,8 @@ const IMPLEMENTED = new Set([
   'julian-period/mm-dd-yy',
   'julian-period/yy-m-dd',
   'mjd/mjd',
+  'japanese/mm-dd-yy',
+  'japanese/yy-m-dd',
   'unix/timestamp',
 ]);
 
@@ -77,9 +79,10 @@ describe('reference table regression', () => {
       const read = engineReads(entry);
       expect(read, `engine should read π for ${title}`).toBeDefined();
       expect(read?.depth).toBeGreaterThanOrEqual(entry.sequence.length);
-      if (entry.format !== 'timestamp') {
-        // year/eraYear disambiguation; the unix "year" is a second count, not a calendar year
-        expect(getCalendar(entry.calendar)?.fields(isoToJdn(entry.isoDate)).year).toBe(entry.fullYear);
+      if (entry.format !== 'timestamp' && entry.format !== 'mjd') {
+        // year disambiguation; era calendars (Japanese) match on eraYear, not the continuous year
+        const calendarFields = getCalendar(entry.calendar)?.fields(isoToJdn(entry.isoDate));
+        expect([calendarFields?.year, calendarFields?.eraYear]).toContain(entry.fullYear);
       }
     });
   }
