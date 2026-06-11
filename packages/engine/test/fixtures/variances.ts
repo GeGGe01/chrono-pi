@@ -23,6 +23,10 @@ const ETHIOPIC =
   "Standard Ethiopic reproduces the table's December rows; the March rows read month 7 (Mägabit) " +
   "astronomically, not the table's month 3 — an apparent month error in the table. 1838/2138 are ±1 day.";
 
+const ROMAN =
+  'Roman (Julian + 753) is correct; the table assumes a constant 13-day Julian–Gregorian gap, but after ' +
+  "2100 it widens to 14 days, so the table's far-future Gregorian date is one day early.";
+
 export const VARIANCES = new Map<string, string>([
   ['2036-06-04/persian/mm-dd-yy', PERSIAN],
   ['2052-07-06/persian/yy-m-dd', PERSIAN],
@@ -51,4 +55,7 @@ export const VARIANCES = new Map<string, string>([
   ['2123-03-23/ethiopic/mm-dd-yy', ETHIOPIC],
   ['2138-12-24/ethiopic/yy-m-dd', ETHIOPIC],
   ['2223-03-23/ethiopic/mm-dd-yy', ETHIOPIC],
+
+  ['2162-03-27/roman/mm-dd-yy', ROMAN],
+  ['2178-04-28/roman/yy-m-dd', ROMAN],
 ]);

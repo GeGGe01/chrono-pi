@@ -119,6 +119,35 @@ export const REFERENCE_ENTRIES: ReferenceEntry[] = [
   { isoDate: '2142-04-15', calendar: 'minguo', format: 'yy-m-dd', sequence: '31415', fullYear: 231, tier: 'canonical' },
   { isoDate: '2226-03-14', calendar: 'minguo', format: 'mm-dd-yy', sequence: '31415', fullYear: 315, tier: 'canonical' },
 
+  // assyrian (Gregorian months + 4750)
+  { isoDate: '1865-03-14', calendar: 'assyrian', format: 'mm-dd-yy', sequence: '31415', fullYear: 6615, tier: 'canonical' },
+  { isoDate: '1965-03-14', calendar: 'assyrian', format: 'mm-dd-yy', sequence: '31415', fullYear: 6715, tier: 'canonical' },
+  { isoDate: '2065-03-14', calendar: 'assyrian', format: 'mm-dd-yy', sequence: '31415', fullYear: 6815, tier: 'canonical' },
+  { isoDate: '2165-03-14', calendar: 'assyrian', format: 'mm-dd-yy', sequence: '31415', fullYear: 6915, tier: 'canonical' },
+  { isoDate: '1981-04-15', calendar: 'assyrian', format: 'yy-m-dd', sequence: '31415', fullYear: 6731, tier: 'canonical' },
+  { isoDate: '2081-04-15', calendar: 'assyrian', format: 'yy-m-dd', sequence: '31415', fullYear: 6831, tier: 'canonical' },
+  { isoDate: '2181-04-15', calendar: 'assyrian', format: 'yy-m-dd', sequence: '31415', fullYear: 6931, tier: 'canonical' },
+
+  // armenian (Gregorian months − 551)
+  { isoDate: '1866-03-14', calendar: 'armenian', format: 'mm-dd-yy', sequence: '31415', fullYear: 1315, tier: 'canonical' },
+  { isoDate: '1966-03-14', calendar: 'armenian', format: 'mm-dd-yy', sequence: '31415', fullYear: 1415, tier: 'canonical' },
+  { isoDate: '2066-03-14', calendar: 'armenian', format: 'mm-dd-yy', sequence: '31415', fullYear: 1515, tier: 'canonical' },
+  { isoDate: '2166-03-14', calendar: 'armenian', format: 'mm-dd-yy', sequence: '31415', fullYear: 1615, tier: 'canonical' },
+  { isoDate: '1882-04-15', calendar: 'armenian', format: 'yy-m-dd', sequence: '31415', fullYear: 1331, tier: 'canonical' },
+  { isoDate: '1982-04-15', calendar: 'armenian', format: 'yy-m-dd', sequence: '31415', fullYear: 1431, tier: 'canonical' },
+  { isoDate: '2082-04-15', calendar: 'armenian', format: 'yy-m-dd', sequence: '31415', fullYear: 1531, tier: 'canonical' },
+  { isoDate: '2182-04-15', calendar: 'armenian', format: 'yy-m-dd', sequence: '31415', fullYear: 1631, tier: 'canonical' },
+
+  // roman / AUC (Julian months + 753)
+  { isoDate: '1862-03-26', calendar: 'roman', format: 'mm-dd-yy', sequence: '31415', fullYear: 2615, tier: 'canonical' },
+  { isoDate: '1962-03-27', calendar: 'roman', format: 'mm-dd-yy', sequence: '31415', fullYear: 2715, tier: 'canonical' },
+  { isoDate: '2062-03-27', calendar: 'roman', format: 'mm-dd-yy', sequence: '31415', fullYear: 2815, tier: 'canonical' },
+  { isoDate: '2162-03-27', calendar: 'roman', format: 'mm-dd-yy', sequence: '31415', fullYear: 2915, tier: 'canonical' },
+  { isoDate: '1878-04-27', calendar: 'roman', format: 'yy-m-dd', sequence: '31415', fullYear: 2631, tier: 'canonical' },
+  { isoDate: '1978-04-28', calendar: 'roman', format: 'yy-m-dd', sequence: '31415', fullYear: 2731, tier: 'canonical' },
+  { isoDate: '2078-04-28', calendar: 'roman', format: 'yy-m-dd', sequence: '31415', fullYear: 2831, tier: 'canonical' },
+  { isoDate: '2178-04-28', calendar: 'roman', format: 'yy-m-dd', sequence: '31415', fullYear: 2931, tier: 'canonical' },
+
   // unix — instant-aware (the π-prefix second falls mid-day; .589 carries it to depth 13)
   { isoDate: '2069-07-21', calendar: 'unix', format: 'timestamp', sequence: '3141592653589', fullYear: 3141592653, tier: 'canonical' },
 ];

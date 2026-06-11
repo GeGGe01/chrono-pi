@@ -82,6 +82,9 @@ const DATE_CALENDARS = [
   'indian',
   'buddhist',
   'minguo',
+  'assyrian',
+  'armenian',
+  'roman',
 ] as const;
 
 export const standardReckonings: readonly Reckoning[] = [
