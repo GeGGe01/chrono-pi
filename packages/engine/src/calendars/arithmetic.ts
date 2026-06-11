@@ -102,6 +102,38 @@ export const minguo: Calendar = {
   },
 };
 
+// Year-offset calendars that share another calendar's months and days: Assyrian and Armenian track the
+// Gregorian date, Roman (AUC) tracks the Julian date. None is an independent collision gear.
+export const assyrian: Calendar = {
+  id: 'assyrian',
+  tier: 'canonical',
+  independent: false,
+  fields(jdn) {
+    const { year, month, day } = gregorianParts(jdn);
+    return { year: year + 4750, month, day };
+  },
+};
+
+export const armenian: Calendar = {
+  id: 'armenian',
+  tier: 'canonical',
+  independent: false,
+  fields(jdn) {
+    const { year, month, day } = gregorianParts(jdn);
+    return { year: year - 551, month, day };
+  },
+};
+
+export const roman: Calendar = {
+  id: 'roman',
+  tier: 'canonical',
+  independent: false,
+  fields(jdn) {
+    const { year, month, day } = julian.fields(jdn);
+    return { year: year + 753, month, day };
+  },
+};
+
 export const arithmeticCalendars: readonly Calendar[] = [
   holocene,
   unix,
@@ -110,6 +142,9 @@ export const arithmeticCalendars: readonly Calendar[] = [
   ethiopic,
   buddhist,
   minguo,
+  assyrian,
+  armenian,
+  roman,
 ];
 
 export function registerArithmeticCalendars(): void {
