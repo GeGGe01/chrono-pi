@@ -50,7 +50,37 @@ export const julian: Calendar = {
   },
 };
 
-export const arithmeticCalendars: readonly Calendar[] = [holocene, unix, julian];
+// Coptic and Ethiopic: twelve 30-day months plus a short epagomenal "month", leap every fourth year.
+// The Temporal polyfill mishandles their eras, so they are computed directly over the JDN.
+const COPTIC_EPOCH = 1825030; // JDN of 1 Thout 1 (29 Aug 284 CE Julian)
+const ETHIOPIC_EPOCH = 1724221; // JDN of 1 Mäskäräm 1 (29 Aug 8 CE Julian)
+
+function epagomenalStart(epoch: number, year: number, month: number): number {
+  return epoch - 1 + 365 * (year - 1) + Math.floor(year / 4) + 30 * (month - 1) + 1;
+}
+
+function epagomenalFields(jdn: JDN, epoch: number) {
+  const year = Math.floor((4 * (jdn - epoch) + 1463) / 1461);
+  const month = Math.floor((jdn - epagomenalStart(epoch, year, 1)) / 30) + 1;
+  const day = jdn - epagomenalStart(epoch, year, month) + 1;
+  return { year, month, day };
+}
+
+export const coptic: Calendar = {
+  id: 'coptic',
+  tier: 'canonical',
+  independent: true,
+  fields: (jdn) => epagomenalFields(jdn, COPTIC_EPOCH),
+};
+
+export const ethiopic: Calendar = {
+  id: 'ethiopic',
+  tier: 'canonical',
+  independent: true,
+  fields: (jdn) => epagomenalFields(jdn, ETHIOPIC_EPOCH),
+};
+
+export const arithmeticCalendars: readonly Calendar[] = [holocene, unix, julian, coptic, ethiopic];
 
 export function registerArithmeticCalendars(): void {
   for (const calendar of arithmeticCalendars) {

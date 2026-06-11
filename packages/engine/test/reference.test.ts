@@ -21,6 +21,12 @@ const IMPLEMENTED = new Set([
   'persian/yy-m-dd',
   'islamic/mm-dd-yy',
   'islamic/yy-m-dd',
+  'coptic/mm-dd-yy',
+  'coptic/yy-m-dd',
+  'ethiopic/mm-dd-yy',
+  'ethiopic/yy-m-dd',
+  'indian/mm-dd-yy',
+  'indian/yy-m-dd',
   'unix/timestamp',
 ]);
 

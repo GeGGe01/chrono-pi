@@ -69,6 +69,37 @@ export const REFERENCE_ENTRIES: ReferenceEntry[] = [
   { isoDate: '2188-09-05', calendar: 'islamic', format: 'mm-dd-yy', sequence: '31415', fullYear: 1615, tier: 'canonical' },
   { isoDate: '2204-04-12', calendar: 'islamic', format: 'yy-m-dd', sequence: '31415', fullYear: 1631, tier: 'canonical' },
 
-  // unix — recorded variance (mid-day perfect second, not midnight); fixed in the timestamp batch
+  // coptic (Temporal 'coptic')
+  { isoDate: '1838-12-24', calendar: 'coptic', format: 'yy-m-dd', sequence: '31415', fullYear: 1531, tier: 'canonical' },
+  { isoDate: '1898-11-23', calendar: 'coptic', format: 'mm-dd-yy', sequence: '31415', fullYear: 1615, tier: 'canonical' },
+  { isoDate: '1914-12-24', calendar: 'coptic', format: 'yy-m-dd', sequence: '31415', fullYear: 1631, tier: 'canonical' },
+  { isoDate: '1998-11-23', calendar: 'coptic', format: 'mm-dd-yy', sequence: '31415', fullYear: 1715, tier: 'canonical' },
+  { isoDate: '2014-12-24', calendar: 'coptic', format: 'yy-m-dd', sequence: '31415', fullYear: 1731, tier: 'canonical' },
+  { isoDate: '2098-11-23', calendar: 'coptic', format: 'mm-dd-yy', sequence: '31415', fullYear: 1815, tier: 'canonical' },
+  { isoDate: '2114-12-24', calendar: 'coptic', format: 'yy-m-dd', sequence: '31415', fullYear: 1831, tier: 'canonical' },
+  { isoDate: '2198-11-23', calendar: 'coptic', format: 'mm-dd-yy', sequence: '31415', fullYear: 1915, tier: 'canonical' },
+  { isoDate: '2214-12-24', calendar: 'coptic', format: 'yy-m-dd', sequence: '31415', fullYear: 1931, tier: 'canonical' },
+
+  // ethiopic (Temporal 'ethiopic')
+  { isoDate: '1838-12-24', calendar: 'ethiopic', format: 'yy-m-dd', sequence: '31415', fullYear: 1831, tier: 'canonical' },
+  { isoDate: '1923-03-23', calendar: 'ethiopic', format: 'mm-dd-yy', sequence: '31415', fullYear: 1915, tier: 'canonical' },
+  { isoDate: '1938-12-24', calendar: 'ethiopic', format: 'yy-m-dd', sequence: '31415', fullYear: 1931, tier: 'canonical' },
+  { isoDate: '2023-03-23', calendar: 'ethiopic', format: 'mm-dd-yy', sequence: '31415', fullYear: 2015, tier: 'canonical' },
+  { isoDate: '2038-12-24', calendar: 'ethiopic', format: 'yy-m-dd', sequence: '31415', fullYear: 2031, tier: 'canonical' },
+  { isoDate: '2123-03-23', calendar: 'ethiopic', format: 'mm-dd-yy', sequence: '31415', fullYear: 2115, tier: 'canonical' },
+  { isoDate: '2138-12-24', calendar: 'ethiopic', format: 'yy-m-dd', sequence: '31415', fullYear: 2131, tier: 'canonical' },
+  { isoDate: '2223-03-23', calendar: 'ethiopic', format: 'mm-dd-yy', sequence: '31415', fullYear: 2215, tier: 'canonical' },
+
+  // indian (Temporal 'indian', Saka era)
+  { isoDate: '1893-06-04', calendar: 'indian', format: 'mm-dd-yy', sequence: '31415', fullYear: 1815, tier: 'canonical' },
+  { isoDate: '1909-07-06', calendar: 'indian', format: 'yy-m-dd', sequence: '31415', fullYear: 1831, tier: 'canonical' },
+  { isoDate: '1993-06-04', calendar: 'indian', format: 'mm-dd-yy', sequence: '31415', fullYear: 1915, tier: 'canonical' },
+  { isoDate: '2009-07-06', calendar: 'indian', format: 'yy-m-dd', sequence: '31415', fullYear: 1931, tier: 'canonical' },
+  { isoDate: '2093-06-04', calendar: 'indian', format: 'mm-dd-yy', sequence: '31415', fullYear: 2015, tier: 'canonical' },
+  { isoDate: '2109-07-06', calendar: 'indian', format: 'yy-m-dd', sequence: '31415', fullYear: 2031, tier: 'canonical' },
+  { isoDate: '2193-06-04', calendar: 'indian', format: 'mm-dd-yy', sequence: '31415', fullYear: 2115, tier: 'canonical' },
+  { isoDate: '2209-07-06', calendar: 'indian', format: 'yy-m-dd', sequence: '31415', fullYear: 2131, tier: 'canonical' },
+
+  // unix — instant-aware (the π-prefix second falls mid-day; .589 carries it to depth 13)
   { isoDate: '2069-07-21', calendar: 'unix', format: 'timestamp', sequence: '3141592653589', fullYear: 3141592653, tier: 'canonical' },
 ];
