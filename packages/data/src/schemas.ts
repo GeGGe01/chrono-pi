@@ -15,11 +15,13 @@ export const perfectDaySchema = z.object({
   tier: tierSchema,
 });
 
+// A collision is, by definition, two or more independent calendars reading π on one day — so the
+// schema requires at least two independent calendars (and at least the two reads that produce them).
 export const collisionSchema = z.object({
   isoDate: z.string(),
   jdn: z.number().int(),
-  perfectDays: z.array(perfectDaySchema),
-  independentCalendars: z.array(z.string()),
+  perfectDays: z.array(perfectDaySchema).min(2),
+  independentCalendars: z.array(z.string()).min(2),
 });
 
 // A witness is a known, verified collision tagged by where it sits relative to the lifetime window.
