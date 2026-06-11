@@ -1,0 +1,702 @@
+{
+  "window": {
+    "start": "2000-01-01",
+    "end": "2226-12-31"
+  },
+  "count": 77,
+  "days": [
+    {
+      "jdn": 2452348,
+      "isoDate": "2002-03-14",
+      "calendarId": "julian-period",
+      "reckoningId": "julian-period/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2452713,
+      "isoDate": "2003-03-14",
+      "calendarId": "japanese",
+      "reckoningId": "japanese/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2455019,
+      "isoDate": "2009-07-06",
+      "calendarId": "indian",
+      "reckoningId": "indian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2455287,
+      "isoDate": "2010-03-31",
+      "calendarId": "islamic",
+      "reckoningId": "islamic/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2457016,
+      "isoDate": "2014-12-24",
+      "calendarId": "coptic",
+      "reckoningId": "coptic/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2457096,
+      "isoDate": "2015-03-14",
+      "calendarId": "gregorian",
+      "reckoningId": "gregorian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2457096,
+      "isoDate": "2015-03-14",
+      "calendarId": "holocene",
+      "reckoningId": "holocene/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2457109,
+      "isoDate": "2015-03-27",
+      "calendarId": "julian",
+      "reckoningId": "julian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2458224,
+      "isoDate": "2018-04-15",
+      "calendarId": "julian-period",
+      "reckoningId": "julian-period/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2458589,
+      "isoDate": "2019-04-15",
+      "calendarId": "japanese",
+      "reckoningId": "japanese/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2459907,
+      "isoDate": "2022-11-23",
+      "calendarId": "ethiopic",
+      "reckoningId": "ethiopic/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2461114,
+      "isoDate": "2026-03-14",
+      "calendarId": "minguo",
+      "reckoningId": "minguo/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2462972,
+      "isoDate": "2031-04-15",
+      "calendarId": "gregorian",
+      "reckoningId": "gregorian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2462972,
+      "isoDate": "2031-04-15",
+      "calendarId": "holocene",
+      "reckoningId": "holocene/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2462985,
+      "isoDate": "2031-04-28",
+      "calendarId": "julian",
+      "reckoningId": "julian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2463671,
+      "isoDate": "2033-03-14",
+      "calendarId": "japanese",
+      "reckoningId": "japanese/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2464848,
+      "isoDate": "2036-06-03",
+      "calendarId": "persian",
+      "reckoningId": "persian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2465782,
+      "isoDate": "2038-12-24",
+      "calendarId": "ethiopic",
+      "reckoningId": "ethiopic/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2466990,
+      "isoDate": "2042-04-15",
+      "calendarId": "minguo",
+      "reckoningId": "minguo/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2469547,
+      "isoDate": "2049-04-15",
+      "calendarId": "japanese",
+      "reckoningId": "japanese/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2470724,
+      "isoDate": "2052-07-05",
+      "calendarId": "persian",
+      "reckoningId": "persian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2471617,
+      "isoDate": "2054-12-15",
+      "calendarId": "hebrew",
+      "reckoningId": "hebrew/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2474276,
+      "isoDate": "2062-03-27",
+      "calendarId": "roman",
+      "reckoningId": "roman/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2475359,
+      "isoDate": "2065-03-14",
+      "calendarId": "assyrian",
+      "reckoningId": "assyrian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2475724,
+      "isoDate": "2066-03-14",
+      "calendarId": "armenian",
+      "reckoningId": "armenian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2476949,
+      "isoDate": "2069-07-21",
+      "calendarId": "unix",
+      "reckoningId": "unix/timestamp",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2477463,
+      "isoDate": "2070-12-17",
+      "calendarId": "hebrew",
+      "reckoningId": "hebrew/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2477916,
+      "isoDate": "2072-03-14",
+      "calendarId": "buddhist",
+      "reckoningId": "buddhist/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2480152,
+      "isoDate": "2078-04-28",
+      "calendarId": "roman",
+      "reckoningId": "roman/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2481235,
+      "isoDate": "2081-04-15",
+      "calendarId": "assyrian",
+      "reckoningId": "assyrian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2481600,
+      "isoDate": "2082-04-15",
+      "calendarId": "armenian",
+      "reckoningId": "armenian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2483792,
+      "isoDate": "2088-04-15",
+      "calendarId": "buddhist",
+      "reckoningId": "buddhist/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2485023,
+      "isoDate": "2091-08-29",
+      "calendarId": "islamic",
+      "reckoningId": "islamic/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2485668,
+      "isoDate": "2093-06-04",
+      "calendarId": "indian",
+      "reckoningId": "indian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2487666,
+      "isoDate": "2098-11-23",
+      "calendarId": "coptic",
+      "reckoningId": "coptic/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2488872,
+      "isoDate": "2102-03-14",
+      "calendarId": "julian-period",
+      "reckoningId": "julian-period/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2490724,
+      "isoDate": "2107-04-09",
+      "calendarId": "islamic",
+      "reckoningId": "islamic/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2491543,
+      "isoDate": "2109-07-06",
+      "calendarId": "indian",
+      "reckoningId": "indian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2493541,
+      "isoDate": "2114-12-25",
+      "calendarId": "coptic",
+      "reckoningId": "coptic/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2493620,
+      "isoDate": "2115-03-14",
+      "calendarId": "gregorian",
+      "reckoningId": "gregorian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2493620,
+      "isoDate": "2115-03-14",
+      "calendarId": "holocene",
+      "reckoningId": "holocene/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2493634,
+      "isoDate": "2115-03-28",
+      "calendarId": "julian",
+      "reckoningId": "julian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2494748,
+      "isoDate": "2118-04-15",
+      "calendarId": "julian-period",
+      "reckoningId": "julian-period/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2496432,
+      "isoDate": "2122-11-24",
+      "calendarId": "ethiopic",
+      "reckoningId": "ethiopic/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2497638,
+      "isoDate": "2126-03-14",
+      "calendarId": "minguo",
+      "reckoningId": "minguo/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2499496,
+      "isoDate": "2131-04-15",
+      "calendarId": "gregorian",
+      "reckoningId": "gregorian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2499496,
+      "isoDate": "2131-04-15",
+      "calendarId": "holocene",
+      "reckoningId": "holocene/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2499510,
+      "isoDate": "2131-04-29",
+      "calendarId": "julian",
+      "reckoningId": "julian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2500195,
+      "isoDate": "2133-03-14",
+      "calendarId": "japanese",
+      "reckoningId": "japanese/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2501372,
+      "isoDate": "2136-06-03",
+      "calendarId": "persian",
+      "reckoningId": "persian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2502307,
+      "isoDate": "2138-12-25",
+      "calendarId": "ethiopic",
+      "reckoningId": "ethiopic/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2503514,
+      "isoDate": "2142-04-15",
+      "calendarId": "minguo",
+      "reckoningId": "minguo/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2506071,
+      "isoDate": "2149-04-15",
+      "calendarId": "japanese",
+      "reckoningId": "japanese/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2507248,
+      "isoDate": "2152-07-05",
+      "calendarId": "persian",
+      "reckoningId": "persian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2508116,
+      "isoDate": "2154-11-20",
+      "calendarId": "hebrew",
+      "reckoningId": "hebrew/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2510801,
+      "isoDate": "2162-03-28",
+      "calendarId": "roman",
+      "reckoningId": "roman/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2511883,
+      "isoDate": "2165-03-14",
+      "calendarId": "assyrian",
+      "reckoningId": "assyrian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2512248,
+      "isoDate": "2166-03-14",
+      "calendarId": "armenian",
+      "reckoningId": "armenian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2513993,
+      "isoDate": "2170-12-23",
+      "calendarId": "hebrew",
+      "reckoningId": "hebrew/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2514440,
+      "isoDate": "2172-03-14",
+      "calendarId": "buddhist",
+      "reckoningId": "buddhist/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2516677,
+      "isoDate": "2178-04-29",
+      "calendarId": "roman",
+      "reckoningId": "roman/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2517759,
+      "isoDate": "2181-04-15",
+      "calendarId": "assyrian",
+      "reckoningId": "assyrian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2518124,
+      "isoDate": "2182-04-15",
+      "calendarId": "armenian",
+      "reckoningId": "armenian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2520316,
+      "isoDate": "2188-04-15",
+      "calendarId": "buddhist",
+      "reckoningId": "buddhist/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2520460,
+      "isoDate": "2188-09-06",
+      "calendarId": "islamic",
+      "reckoningId": "islamic/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2522192,
+      "isoDate": "2193-06-04",
+      "calendarId": "indian",
+      "reckoningId": "indian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2524191,
+      "isoDate": "2198-11-24",
+      "calendarId": "coptic",
+      "reckoningId": "coptic/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2525396,
+      "isoDate": "2202-03-14",
+      "calendarId": "julian-period",
+      "reckoningId": "julian-period/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2526161,
+      "isoDate": "2204-04-17",
+      "calendarId": "islamic",
+      "reckoningId": "islamic/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2528067,
+      "isoDate": "2209-07-06",
+      "calendarId": "indian",
+      "reckoningId": "indian/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2530066,
+      "isoDate": "2214-12-26",
+      "calendarId": "coptic",
+      "reckoningId": "coptic/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2530144,
+      "isoDate": "2215-03-14",
+      "calendarId": "gregorian",
+      "reckoningId": "gregorian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2530144,
+      "isoDate": "2215-03-14",
+      "calendarId": "holocene",
+      "reckoningId": "holocene/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2530159,
+      "isoDate": "2215-03-29",
+      "calendarId": "julian",
+      "reckoningId": "julian/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2531272,
+      "isoDate": "2218-04-15",
+      "calendarId": "julian-period",
+      "reckoningId": "julian-period/yy-m-dd",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2532957,
+      "isoDate": "2222-11-25",
+      "calendarId": "ethiopic",
+      "reckoningId": "ethiopic/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    },
+    {
+      "jdn": 2534162,
+      "isoDate": "2226-03-14",
+      "calendarId": "minguo",
+      "reckoningId": "minguo/mm-dd-yy",
+      "digits": "3141592653589",
+      "depth": 13,
+      "tier": "canonical"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "window": {
+    "start": "2000-01-01",
+    "end": "2226-12-31"
+  },
+  "windowCollisions": [],
+  "witnesses": [
+    {
+      "isoDate": "0215-03-14",
+      "jdn": 1799659,
+      "perfectDays": [
+        {
+          "jdn": 1799659,
+          "isoDate": "0215-03-14",
+          "calendarId": "gregorian",
+          "reckoningId": "gregorian/mm-dd-yy",
+          "digits": "3141592653589",
+          "depth": 13,
+          "tier": "canonical"
+        },
+        {
+          "jdn": 1799659,
+          "isoDate": "0215-03-14",
+          "calendarId": "julian",
+          "reckoningId": "julian/mm-dd-yy",
+          "digits": "3141592653589",
+          "depth": 13,
+          "tier": "canonical"
+        },
+        {
+          "jdn": 1799659,
+          "isoDate": "0215-03-14",
+          "calendarId": "holocene",
+          "reckoningId": "holocene/mm-dd-yy",
+          "digits": "3141592653589",
+          "depth": 13,
+          "tier": "canonical"
+        }
+      ],
+      "independentCalendars": [
+        "gregorian",
+        "julian"
+      ],
+      "kind": "historical"
+    },
+    {
+      "isoDate": "2197415-03-14",
+      "jdn": 804310480,
+      "perfectDays": [
+        {
+          "jdn": 804310480,
+          "isoDate": "2197415-03-14",
+          "calendarId": "gregorian",
+          "reckoningId": "gregorian/mm-dd-yy",
+          "digits": "3141592653589",
+          "depth": 13,
+          "tier": "canonical"
+        },
+        {
+          "jdn": 804310480,
+          "isoDate": "2197415-03-14",
+          "calendarId": "holocene",
+          "reckoningId": "holocene/mm-dd-yy",
+          "digits": "3141592653589",
+          "depth": 13,
+          "tier": "canonical"
+        },
+        {
+          "jdn": 804310480,
+          "isoDate": "2197415-03-14",
+          "calendarId": "islamic",
+          "reckoningId": "islamic/mm-dd-yy",
+          "digits": "3141592653589",
+          "depth": 13,
+          "tier": "canonical"
+        }
+      ],
+      "independentCalendars": [
+        "gregorian",
+        "islamic"
+      ],
+      "kind": "deep-future"
+    }
+  ]
+}
