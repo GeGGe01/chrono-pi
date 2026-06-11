@@ -1,0 +1,78 @@
+---
+import '../styles/tokens.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Every day a calendar reads out the digits of π.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <p>chrono-pi — a deterministic calendar-and-π engine. Times shown in your local zone.</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+  html {
+    color-scheme: dark;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding: var(--gap);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 8vw, 6rem);
+  }
+  section {
+    scroll-margin-top: 2rem;
+  }
+  h2 {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+  footer {
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding: var(--gap);
+    color: var(--muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--line);
+  }
+  .digits {
+    font-family: var(--mono);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+</style>

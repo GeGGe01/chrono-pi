@@ -1,0 +1,74 @@
+---
+import type { PerfectDay } from 'chrono-pi-data';
+
+interface Props {
+  days: PerfectDay[];
+}
+
+const { days } = Astro.props;
+---
+
+<section class="upcoming">
+  <h2>Upcoming</h2>
+  <ol>
+    {
+      days.map((day) => (
+        <li>
+          <time datetime={day.isoDate}>{day.isoDate}</time>
+          <span class="cal">{day.calendarId}</span>
+          <span class="reck">{day.reckoningId}</span>
+          <span class="digits">{day.digits}</span>
+          <span class="depth">π·{day.depth}</span>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  ol {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  li {
+    display: grid;
+    grid-template-columns: 7rem 1fr auto;
+    grid-template-areas: 'date cal depth' 'date reck digits';
+    gap: 0.1rem 1rem;
+    align-items: baseline;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--line);
+  }
+  time {
+    grid-area: date;
+    font-family: var(--mono);
+    font-weight: 600;
+  }
+  .cal {
+    grid-area: cal;
+    font-weight: 600;
+  }
+  .reck {
+    grid-area: reck;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .digits {
+    grid-area: digits;
+    text-align: right;
+  }
+  .depth {
+    grid-area: depth;
+    justify-self: end;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  @media (max-width: 32rem) {
+    li {
+      grid-template-columns: 1fr auto;
+      grid-template-areas: 'date depth' 'cal digits' 'reck reck';
+    }
+  }
+</style>

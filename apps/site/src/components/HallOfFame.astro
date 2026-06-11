@@ -1,0 +1,110 @@
+---
+import type { CollisionsArtifact, Witness } from 'chrono-pi-data';
+
+interface Props {
+  collisions: CollisionsArtifact;
+}
+
+const { collisions } = Astro.props;
+
+const KIND_LABEL: Record<Witness['kind'], string> = {
+  historical: 'Historical',
+  'deep-future': 'Deep future',
+};
+
+// The reads from the calendars that actually make the collision (the independent gears).
+function collidingReads(witness: Witness) {
+  return witness.perfectDays.filter((read) =>
+    witness.independentCalendars.includes(read.calendarId),
+  );
+}
+---
+
+<section class="fame">
+  <h2>Collision hall of fame</h2>
+  <p class="sub">The rare days two independent calendars read π at once.</p>
+  <div class="cards">
+    {
+      collisions.witnesses.map((witness) => (
+        <article class="card">
+          <p class="kind">{KIND_LABEL[witness.kind]}</p>
+          <p class="cdate">
+            <time datetime={witness.isoDate}>{witness.isoDate}</time>
+          </p>
+          <p class="cals">{witness.independentCalendars.join(' ∩ ')}</p>
+          <ul class="reads">
+            {collidingReads(witness).map((read) => (
+              <li>
+                <span class="cal">{read.calendarId}</span>
+                <span class="digits">{read.digits}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+  {
+    collisions.windowCollisions.length === 0 && (
+      <p class="none">
+        None yet inside the 2000–2226 window — the clean doubles are ancient or deep-future.
+      </p>
+    )
+  }
+</section>
+
+<style>
+  .sub {
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+  }
+  .kind {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.7rem;
+    color: var(--accent-2);
+  }
+  .cdate {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-block: 0.25rem;
+  }
+  .cals {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .reads {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .reads li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--line);
+    padding-top: 0.4rem;
+    font-size: 0.9rem;
+  }
+  .none {
+    margin-top: 1.5rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>
