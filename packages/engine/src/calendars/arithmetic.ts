@@ -80,6 +80,35 @@ export const ethiopic: Calendar = {
   fields: (jdn) => epagomenalFields(jdn, ETHIOPIC_EPOCH),
 };
 
+// Tabular Islamic, civil epoch (JDN 1948440 = 16 July 622 CE Julian), 30-year cycle with the civil leap
+// set. Pure arithmetic — unlike Temporal (which maxes out near year 275760) it reaches the deep-future
+// collision witness. Reproduces the same window rows the Temporal `islamic-civil` did.
+const ISLAMIC_EPOCH = 1948440;
+
+function islamicMonthStart(year: number, month: number): JDN {
+  return (
+    ISLAMIC_EPOCH -
+    1 +
+    354 * (year - 1) +
+    Math.floor((3 + 11 * year) / 30) +
+    29 * (month - 1) +
+    Math.floor(month / 2) +
+    1
+  );
+}
+
+export const islamic: Calendar = {
+  id: 'islamic',
+  tier: 'canonical',
+  independent: true,
+  fields(jdn) {
+    const year = Math.floor((30 * (jdn - ISLAMIC_EPOCH) + 10646) / 10631);
+    let month = 1;
+    while (month < 12 && islamicMonthStart(year, month + 1) <= jdn) month += 1;
+    return { year, month, day: jdn - islamicMonthStart(year, month) + 1 };
+  },
+};
+
 // Thai Buddhist Era and the ROC/Juche year: Gregorian months and days with a shifted year, like
 // Holocene — not independent collision gears.
 export const buddhist: Calendar = {
@@ -178,6 +207,7 @@ export const arithmeticCalendars: readonly Calendar[] = [
   julian,
   coptic,
   ethiopic,
+  islamic,
   buddhist,
   minguo,
   assyrian,

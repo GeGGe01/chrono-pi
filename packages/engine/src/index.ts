@@ -17,7 +17,6 @@ export {
 export {
   gregorian,
   hebrew,
-  islamic,
   persian,
   registerTemporalCalendars,
   temporalCalendars,
@@ -25,6 +24,7 @@ export {
 export {
   arithmeticCalendars,
   holocene,
+  islamic,
   julian,
   registerArithmeticCalendars,
   unix,
