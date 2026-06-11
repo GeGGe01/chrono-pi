@@ -42,6 +42,7 @@ const IMPLEMENTED = new Set([
   'mjd/mjd',
   'japanese/mm-dd-yy',
   'japanese/yy-m-dd',
+  'discordian/yyyy-mm-dd',
   'unix/timestamp',
 ]);
 

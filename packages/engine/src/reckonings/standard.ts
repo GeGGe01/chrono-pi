@@ -114,6 +114,7 @@ export const standardReckonings: readonly Reckoning[] = [
   ]),
   dateReckoning('japanese', 'mm-dd-yy', { eraYear: true }),
   dateReckoning('japanese', 'yy-m-dd', { eraYear: true }),
+  dateReckoning('discordian', 'yyyy-mm-dd', { tier: 'novelty' }),
   yyyymmdd,
   unixTimestamp,
   mjdReckoning,
