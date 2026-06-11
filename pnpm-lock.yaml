@@ -26,6 +26,12 @@ importers:
       astro:
         specifier: ^6.4.5
         version: 6.4.5(@types/node@25.9.2)(lightningcss@1.32.0)(rollup@4.61.1)(tsx@4.22.4)(yaml@2.9.0)
+      chrono-pi-data:
+        specifier: workspace:*
+        version: link:../../packages/data
+      chrono-pi-engine:
+        specifier: workspace:*
+        version: link:../../packages/engine
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.9
