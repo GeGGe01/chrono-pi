@@ -2,10 +2,6 @@
 // each with a documented reason. A variance is an expected, recorded mismatch — not a test failure. As
 // batches resolve them, entries leave this ledger. See docs/reference-table.md and the Phase 2 design.
 
-const UNIX =
-  'The midnight-second model reaches only depth 6; the perfect second 3141592653.589 falls mid-day ' +
-  '(00:37:33.589). The instant-aware timestamp batch resolves it.';
-
 const PERSIAN =
   "ICU's 33-year arithmetic Solar Hijri runs one day ahead of the table after ~2025 (the leap-cycle " +
   'divergence). The table used a different leap rule; ICU has no second Persian variant to pin.';
@@ -19,8 +15,6 @@ const ISLAMIC =
   'diverge over centuries. Civil reproduces the near-term rows, so it is the pinned variant.';
 
 export const VARIANCES = new Map<string, string>([
-  ['2069-07-21/unix/timestamp', UNIX],
-
   ['2036-06-04/persian/mm-dd-yy', PERSIAN],
   ['2052-07-06/persian/yy-m-dd', PERSIAN],
   ['2136-06-04/persian/mm-dd-yy', PERSIAN],

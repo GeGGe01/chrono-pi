@@ -21,6 +21,7 @@ const IMPLEMENTED = new Set([
   'persian/yy-m-dd',
   'islamic/mm-dd-yy',
   'islamic/yy-m-dd',
+  'unix/timestamp',
 ]);
 
 const pairKey = (entry: ReferenceEntry): string => `${entry.calendar}/${entry.format}`;
@@ -57,7 +58,10 @@ describe('reference table regression', () => {
       const read = engineReads(entry);
       expect(read, `engine should read π for ${title}`).toBeDefined();
       expect(read?.depth).toBeGreaterThanOrEqual(entry.sequence.length);
-      expect(getCalendar(entry.calendar)?.fields(isoToJdn(entry.isoDate)).year).toBe(entry.fullYear);
+      if (entry.format !== 'timestamp') {
+        // year/eraYear disambiguation; the unix "year" is a second count, not a calendar year
+        expect(getCalendar(entry.calendar)?.fields(isoToJdn(entry.isoDate)).year).toBe(entry.fullYear);
+      }
     });
   }
 

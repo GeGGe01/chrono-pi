@@ -1,3 +1,4 @@
+import { PI_DIGITS } from '../pi';
 import type { CalendarFields, Reckoning, Tier } from '../types';
 import { registerReckoning } from './registry';
 
@@ -34,8 +35,20 @@ export function dateReckoning(calendarId: string, format: DateFormat, tier: Tier
   };
 }
 
-// Unix time: the second count rendered as digits; the π-instant extends it with fractional seconds.
-// Its floor is deeper because a five-digit prefix of a ten-digit timestamp is not a meaningful read.
+// The largest π-prefix integer (3, 31, 314, …, 3141592653) that falls within a day's second range, or
+// null. The π-encoded Unix instant is exactly such a timestamp — for 2069-07-21 it is 3141592653.
+function piPrefixInDay(midnightSecond: number): number | null {
+  const nextMidnight = midnightSecond + 86400;
+  for (let length = 1; length <= 12; length += 1) {
+    const candidate = Number(PI_DIGITS.slice(0, length));
+    if (candidate >= nextMidnight) break;
+    if (candidate >= midnightSecond) return candidate;
+  }
+  return null;
+}
+
+// Unix time: the perfect day is the one whose second range contains a π-prefix timestamp, read at the
+// π-instant (its fractional .589 extends the digits). The floor stays deep — a short prefix is no read.
 export const unixTimestamp: Reckoning = {
   id: 'unix/timestamp',
   calendarId: 'unix',
@@ -44,7 +57,9 @@ export const unixTimestamp: Reckoning = {
   minDepth: 10,
   timeExtends: true,
   read(fields: CalendarFields) {
-    return { digits: String(fields.year), label: `unix · timestamp → ${fields.year}` };
+    const midnight = fields.year; // the unix calendar carries midnight seconds in `year`
+    const timestamp = piPrefixInDay(midnight) ?? midnight;
+    return { digits: String(timestamp), label: `unix · timestamp → ${timestamp}` };
   },
 };
 
