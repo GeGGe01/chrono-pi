@@ -1,6 +1,7 @@
 import type { JDN } from './types';
 
-const DAY_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
+// Year may be any length and negative (astronomical numbering), so the deep-time witnesses parse.
+const DAY_PATTERN = /^(-?\d+)-(\d{2})-(\d{2})$/;
 
 // Gregorian ISO date → Julian Day Number (Fliegel–Van Flandern).
 export function isoToJdn(iso: string): JDN {
@@ -46,5 +47,6 @@ export function* eachJdn(startIso: string, endIso: string): Generator<JDN> {
 }
 
 function pad(value: number, width: number): string {
-  return String(value).padStart(width, '0');
+  const sign = value < 0 ? '-' : '';
+  return sign + String(Math.abs(value)).padStart(width, '0');
 }

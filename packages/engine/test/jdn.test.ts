@@ -33,3 +33,15 @@ describe('eachJdn', () => {
     expect([...eachJdn('2000-01-01', '2000-01-01')]).toEqual([2451545]);
   });
 });
+
+describe('deep-time years (Phase 3 — beyond Temporal range)', () => {
+  it('round-trips years outside 1000-9999, including the deep-future witness', () => {
+    for (const iso of ['0001-01-01', '0215-03-14', '2197415-03-14']) {
+      expect(jdnToIso(isoToJdn(iso))).toBe(iso);
+    }
+  });
+
+  it('round-trips a BCE (astronomical) year', () => {
+    expect(jdnToIso(isoToJdn('-0044-03-15'))).toBe('-0044-03-15');
+  });
+});
