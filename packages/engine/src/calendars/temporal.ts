@@ -36,8 +36,16 @@ export const persian = temporalCalendar('persian', 'persian', canonical);
 // the whitepaper assumed — the oracle corrects the assumption. (They differ by one day.)
 export const islamic = temporalCalendar('islamic', 'islamic-civil', canonical);
 export const indian = temporalCalendar('indian', 'indian', canonical);
+export const japanese = temporalCalendar('japanese', 'japanese', canonical);
 
-export const temporalCalendars: readonly Calendar[] = [gregorian, hebrew, persian, islamic, indian];
+export const temporalCalendars: readonly Calendar[] = [
+  gregorian,
+  hebrew,
+  persian,
+  islamic,
+  indian,
+  japanese,
+];
 
 export function registerTemporalCalendars(): void {
   for (const calendar of temporalCalendars) {
