@@ -100,6 +100,25 @@ export const REFERENCE_ENTRIES: ReferenceEntry[] = [
   { isoDate: '2193-06-04', calendar: 'indian', format: 'mm-dd-yy', sequence: '31415', fullYear: 2115, tier: 'canonical' },
   { isoDate: '2209-07-06', calendar: 'indian', format: 'yy-m-dd', sequence: '31415', fullYear: 2131, tier: 'canonical' },
 
+  // buddhist (Thai Buddhist Era, Gregorian months + 543)
+  { isoDate: '1872-03-14', calendar: 'buddhist', format: 'mm-dd-yy', sequence: '31415', fullYear: 2415, tier: 'canonical' },
+  { isoDate: '1888-04-15', calendar: 'buddhist', format: 'yy-m-dd', sequence: '31415', fullYear: 2431, tier: 'canonical' },
+  { isoDate: '1972-03-14', calendar: 'buddhist', format: 'mm-dd-yy', sequence: '31415', fullYear: 2515, tier: 'canonical' },
+  { isoDate: '1988-04-15', calendar: 'buddhist', format: 'yy-m-dd', sequence: '31415', fullYear: 2531, tier: 'canonical' },
+  { isoDate: '2072-03-14', calendar: 'buddhist', format: 'mm-dd-yy', sequence: '31415', fullYear: 2615, tier: 'canonical' },
+  { isoDate: '2088-04-15', calendar: 'buddhist', format: 'yy-m-dd', sequence: '31415', fullYear: 2631, tier: 'canonical' },
+  { isoDate: '2172-03-14', calendar: 'buddhist', format: 'mm-dd-yy', sequence: '31415', fullYear: 2715, tier: 'canonical' },
+  { isoDate: '2188-04-15', calendar: 'buddhist', format: 'yy-m-dd', sequence: '31415', fullYear: 2731, tier: 'canonical' },
+
+  // minguo / juche (ROC year = Gregorian − 1911)
+  { isoDate: '1926-03-14', calendar: 'minguo', format: 'mm-dd-yy', sequence: '31415', fullYear: 15, tier: 'canonical' },
+  { isoDate: '1942-04-15', calendar: 'minguo', format: 'yy-m-dd', sequence: '31415', fullYear: 31, tier: 'canonical' },
+  { isoDate: '2026-03-14', calendar: 'minguo', format: 'mm-dd-yy', sequence: '31415', fullYear: 115, tier: 'canonical' },
+  { isoDate: '2042-04-15', calendar: 'minguo', format: 'yy-m-dd', sequence: '31415', fullYear: 131, tier: 'canonical' },
+  { isoDate: '2126-03-14', calendar: 'minguo', format: 'mm-dd-yy', sequence: '31415', fullYear: 215, tier: 'canonical' },
+  { isoDate: '2142-04-15', calendar: 'minguo', format: 'yy-m-dd', sequence: '31415', fullYear: 231, tier: 'canonical' },
+  { isoDate: '2226-03-14', calendar: 'minguo', format: 'mm-dd-yy', sequence: '31415', fullYear: 315, tier: 'canonical' },
+
   // unix — instant-aware (the π-prefix second falls mid-day; .589 carries it to depth 13)
   { isoDate: '2069-07-21', calendar: 'unix', format: 'timestamp', sequence: '3141592653589', fullYear: 3141592653, tier: 'canonical' },
 ];

@@ -27,6 +27,10 @@ const IMPLEMENTED = new Set([
   'ethiopic/yy-m-dd',
   'indian/mm-dd-yy',
   'indian/yy-m-dd',
+  'buddhist/mm-dd-yy',
+  'buddhist/yy-m-dd',
+  'minguo/mm-dd-yy',
+  'minguo/yy-m-dd',
   'unix/timestamp',
 ]);
 

@@ -80,7 +80,37 @@ export const ethiopic: Calendar = {
   fields: (jdn) => epagomenalFields(jdn, ETHIOPIC_EPOCH),
 };
 
-export const arithmeticCalendars: readonly Calendar[] = [holocene, unix, julian, coptic, ethiopic];
+// Thai Buddhist Era and the ROC/Juche year: Gregorian months and days with a shifted year, like
+// Holocene — not independent collision gears.
+export const buddhist: Calendar = {
+  id: 'buddhist',
+  tier: 'canonical',
+  independent: false,
+  fields(jdn) {
+    const { year, month, day } = gregorianParts(jdn);
+    return { year: year + 543, month, day };
+  },
+};
+
+export const minguo: Calendar = {
+  id: 'minguo',
+  tier: 'canonical',
+  independent: false,
+  fields(jdn) {
+    const { year, month, day } = gregorianParts(jdn);
+    return { year: year - 1911, month, day };
+  },
+};
+
+export const arithmeticCalendars: readonly Calendar[] = [
+  holocene,
+  unix,
+  julian,
+  coptic,
+  ethiopic,
+  buddhist,
+  minguo,
+];
 
 export function registerArithmeticCalendars(): void {
   for (const calendar of arithmeticCalendars) {
