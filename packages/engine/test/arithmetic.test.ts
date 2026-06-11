@@ -34,8 +34,10 @@ describe('registerArithmeticCalendars', () => {
     clearCalendars();
   });
 
-  it('registers holocene, unix, and julian', () => {
+  it('registers the arithmetic calendars', () => {
     registerArithmeticCalendars();
-    expect(listCalendars().map((c) => c.id).sort()).toEqual(['holocene', 'julian', 'unix']);
+    expect(listCalendars().map((c) => c.id)).toEqual(
+      expect.arrayContaining(['holocene', 'unix', 'julian', 'coptic', 'ethiopic']),
+    );
   });
 });
