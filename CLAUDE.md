@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 chrono-pi finds every day on which an attested calendar-and-format reads out the digits of π (e.g. American `3/14/15` → `31415`), tracks upcoming ones in Google Calendar, and chronicles rare "collision" days where two or three independent calendars read π at once.
 
-**Current state: engine built (Phases 1–2 core).** `packages/engine` is a working pure engine — the JDN axis, the π matcher, calendar + reckoning registries, ~19 calendars (Temporal-backed and arithmetic), the standard reckonings, the perfect-day scanner, window collision detection, and a reference-table regression (`packages/engine/test/reference.test.ts`) that locks 102 rows from `docs/reference-table.md` against a variance ledger. `apps/site` and `apps/sync` are still empty placeholders. The pinned conventions, the recorded variances (mostly errors in the hand-built reference table), and the deferred calendars are documented in `docs/conventions.md`. The `.github/` automation/config (workflows, templates, `dependabot.yml`, release-please, and the `gh`-runbook JSON inputs) is in place.
+**Current state: engine + data built (Phases 1–4).** `packages/engine` is a working pure engine — the JDN axis, the π matcher, calendar + reckoning registries, ~19 calendars (Temporal-backed and arithmetic), the standard reckonings, the perfect-day scanner, collision detection with the two verified witnesses (the historical 215 CE Gregorian∩Julian double and the deep-future 2,197,415 CE Gregorian∩Islamic double), and a reference-table regression (`packages/engine/test/reference.test.ts`) that locks 102 rows from `docs/reference-table.md` against a variance ledger. `packages/data` emits the schema-validated, reproducible JSON artifacts (`perfect-days.json`, `collisions.json`) over the 2000–2226 lifetime window. `apps/site` and `apps/sync` are still empty placeholders. The pinned conventions, the recorded variances (mostly errors in the hand-built reference table), and the deferred calendars are documented in `docs/conventions.md`. The `.github/` automation/config (workflows, templates, `dependabot.yml`, release-please, and the `gh`-runbook JSON inputs) is in place.
 
 ## Implementation mode: `spec-first`
 
@@ -36,7 +36,7 @@ Note: `docs/` holds the design package (`00`–`07`) plus `docs/IMPORT.md`, the 
 A pnpm + strict-TypeScript monorepo. Components are independent and communicate through generated JSON with shared types:
 
 - **`packages/engine`** — pure, no I/O. A calendar registry, a reckoning registry, the π-matcher, the perfect-day scanner, and the collision search.
-- **`packages/data`** — generated artifacts (`perfect-days.json`, `collisions.json`) plus the shared TypeScript types the engine exports and everything else imports.
+- **`packages/data`** — depends on the engine; holds the zod artifact schemas, the output types (the engine's `PerfectDay`/`Collision` plus the artifact envelopes), the deterministic `generate` script (run under tsx), and the generated `perfect-days.json` / `collisions.json`. A reproducibility test guards staleness.
 - **`apps/site`** — Astro static site consuming the JSON at build time (countdown island, hall of fame, timeline).
 - **`apps/sync`** — Google Calendar push; idempotent upsert keyed by a stable `iCalUID`.
 
@@ -66,6 +66,9 @@ pnpm -r build                    # build all, including the Astro site
 
 pnpm --filter chrono-pi-engine scan 2026-01-01 2126-01-01   # run the engine over a range
 pnpm --filter site build                                    # build just the site
+
+pnpm --filter chrono-pi-data generate                       # regenerate the JSON artifacts (deterministic)
+REPRO=1 pnpm --filter chrono-pi-data test                   # include the reproducibility guard locally (CI runs it via CI=true)
 ```
 
 To run a single test once packages exist, use Vitest directly in the package, e.g. `pnpm --filter chrono-pi-engine exec vitest run test/smoke.test.ts`.

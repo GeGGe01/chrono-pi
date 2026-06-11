@@ -1,6 +1,6 @@
 # Phase 4 — Data output — Design
 
-Status: active
+Status: implemented
 
 ## Context
 
