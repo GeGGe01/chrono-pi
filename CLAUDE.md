@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 chrono-pi finds every day on which an attested calendar-and-format reads out the digits of π (e.g. American `3/14/15` → `31415`), tracks upcoming ones in Google Calendar, and chronicles rare "collision" days where two or three independent calendars read π at once.
 
-**Current state: spec-only.** The design is complete (Phase A) but no application code exists yet. The repo holds the locked design package in `docs/` and the GitHub automation/config in `.github/` (workflows, issue/PR templates, `dependabot.yml`, release-please config, plus the `labels.json` / `branch-protection.json` / `repo-settings.json` inputs the `gh` runbook applies). The TypeScript monorepo (`packages/`, `apps/`) described below does not exist yet — building it is the task.
+**Current state: engine built (Phases 1–2 core).** `packages/engine` is a working pure engine — the JDN axis, the π matcher, calendar + reckoning registries, ~19 calendars (Temporal-backed and arithmetic), the standard reckonings, the perfect-day scanner, window collision detection, and a reference-table regression (`packages/engine/test/reference.test.ts`) that locks 102 rows from `docs/reference-table.md` against a variance ledger. `apps/site` and `apps/sync` are still empty placeholders. The pinned conventions, the recorded variances (mostly errors in the hand-built reference table), and the deferred calendars are documented in `docs/conventions.md`. The `.github/` automation/config (workflows, templates, `dependabot.yml`, release-please, and the `gh`-runbook JSON inputs) is in place.
 
 ## Implementation mode: `spec-first`
 
