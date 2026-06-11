@@ -35,8 +35,9 @@ export const persian = temporalCalendar('persian', 'persian', canonical);
 // The reference table's "Islamisk" matches the tabular *civil* epoch, not the astronomical (tbla) one
 // the whitepaper assumed — the oracle corrects the assumption. (They differ by one day.)
 export const islamic = temporalCalendar('islamic', 'islamic-civil', canonical);
+export const indian = temporalCalendar('indian', 'indian', canonical);
 
-export const temporalCalendars: readonly Calendar[] = [gregorian, hebrew, persian, islamic];
+export const temporalCalendars: readonly Calendar[] = [gregorian, hebrew, persian, islamic, indian];
 
 export function registerTemporalCalendars(): void {
   for (const calendar of temporalCalendars) {

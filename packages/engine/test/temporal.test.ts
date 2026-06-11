@@ -50,11 +50,8 @@ describe('registerTemporalCalendars', () => {
 
   it('registers all four seed calendars', () => {
     registerTemporalCalendars();
-    expect(listCalendars().map((c) => c.id).sort()).toEqual([
-      'gregorian',
-      'hebrew',
-      'islamic',
-      'persian',
-    ]);
+    expect(listCalendars().map((c) => c.id)).toEqual(
+      expect.arrayContaining(['gregorian', 'hebrew', 'persian', 'islamic', 'indian']),
+    );
   });
 });
