@@ -52,6 +52,21 @@ describe('collisionSchema', () => {
     expect(collision).toBeDefined();
     expect(() => collisionSchema.parse(collision)).not.toThrow();
   });
+
+  it('rejects fewer than two independent calendars (not a collision)', () => {
+    const [collision] = findCollisions('0215-03-14', '0215-03-14');
+    expect(() =>
+      collisionSchema.parse({ ...collision, independentCalendars: ['gregorian'] }),
+    ).toThrow();
+    expect(() => collisionSchema.parse({ ...collision, independentCalendars: [] })).toThrow();
+  });
+
+  it('rejects fewer than two perfect-day reads', () => {
+    const [collision] = findCollisions('0215-03-14', '0215-03-14');
+    expect(() =>
+      collisionSchema.parse({ ...collision, perfectDays: collision.perfectDays.slice(0, 1) }),
+    ).toThrow();
+  });
 });
 
 describe('witnessSchema', () => {
