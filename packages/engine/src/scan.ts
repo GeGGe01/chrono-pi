@@ -6,7 +6,7 @@ import { eachJdn, jdnToIso } from './jdn';
 import { matchDepth } from './pi';
 import { listReckonings } from './reckonings/registry';
 import { registerStandardReckonings } from './reckonings/standard';
-import type { PerfectDay } from './types';
+import type { CalendarFields, PerfectDay } from './types';
 
 // Register the seed calendars and reckonings into the global registries. Idempotent (keyed by id),
 // so callers can scan without wiring the world up first.
@@ -28,7 +28,13 @@ export function scan(startIso: string, endIso: string): PerfectDay[] {
       const calendar = getCalendar(reckoning.calendarId);
       if (!calendar) continue;
 
-      const read = reckoning.read(calendar.fields(jdn), jdn);
+      let fields: CalendarFields;
+      try {
+        fields = calendar.fields(jdn);
+      } catch {
+        continue; // a Temporal-backed calendar beyond its supported era (deep time) — skip it
+      }
+      const read = reckoning.read(fields, jdn);
       const digits = read.digits + clockDigits(reckoning);
       const depth = matchDepth(digits);
       if (depth < reckoning.minDepth) continue;
