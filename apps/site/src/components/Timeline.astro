@@ -1,0 +1,95 @@
+---
+import type { PerfectDay } from 'chrono-pi-data';
+import { isoToJdn } from 'chrono-pi-engine';
+
+import { timelinePositions } from '../lib/view';
+
+interface Props {
+  days: PerfectDay[];
+  windowStart: string;
+  windowEnd: string;
+  nowIso: string;
+}
+
+const { days, windowStart, windowEnd, nowIso } = Astro.props;
+
+const W = 1000;
+const H = 60;
+const positions = timelinePositions(days, windowStart, windowEnd);
+const startJdn = isoToJdn(windowStart);
+const span = isoToJdn(windowEnd) - startJdn;
+const nowJdn = isoToJdn(nowIso);
+const nowX = span === 0 ? 0 : ((nowJdn - startJdn) / span) * W;
+const startYear = windowStart.slice(0, 4);
+const endYear = windowEnd.slice(0, 4);
+---
+
+<section class="timeline">
+  <h2>Lifetime timeline</h2>
+  <p class="sub">Every perfect pi-day from {startYear} to {endYear}.</p>
+  <svg
+    viewBox={`0 0 ${W} ${H}`}
+    preserveAspectRatio="none"
+    class="tl"
+    role="img"
+    aria-label={`${days.length} perfect days between ${startYear} and ${endYear}`}
+  >
+    <line x1="0" y1="40" x2={W} y2="40" class="axis"></line>
+    {
+      positions.map(({ day, position }) => (
+        <line
+          x1={position * W}
+          x2={position * W}
+          y1="22"
+          y2="40"
+          class={day.jdn > nowJdn ? 'tick up' : 'tick past'}
+        />
+      ))
+    }
+    <line x1={nowX} x2={nowX} y1="12" y2="48" class="now"></line>
+  </svg>
+  <div class="labels"><span>{startYear}</span><span>{endYear}</span></div>
+</section>
+
+<style>
+  .sub {
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+  .tl {
+    width: 100%;
+    height: 64px;
+    margin-top: 1.5rem;
+    overflow: visible;
+  }
+  .tl line {
+    vector-effect: non-scaling-stroke;
+  }
+  .axis {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  .tick {
+    stroke-width: 2;
+  }
+  .tick.past {
+    stroke: var(--muted);
+    opacity: 0.5;
+  }
+  .tick.up {
+    stroke: var(--accent);
+  }
+  .now {
+    stroke: var(--accent-2);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 3;
+  }
+  .labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.25rem;
+  }
+</style>

@@ -1,0 +1,114 @@
+---
+import type { PerfectDay } from 'chrono-pi-data';
+
+import { piInstant } from '../lib/view';
+
+interface Props {
+  day: PerfectDay;
+}
+
+const { day } = Astro.props;
+const target = piInstant(day.isoDate);
+---
+
+<section class="hero">
+  <p class="eyebrow">The next perfect pi-day</p>
+  <p class="date"><time datetime={day.isoDate}>{day.isoDate}</time></p>
+  <div class="countdown" data-target={target} role="timer" aria-live="off">
+    <span class="loading">counting…</span>
+  </div>
+  <p class="reading">
+    <span class="cal">{day.calendarId}</span> · <span class="reck">{day.reckoningId}</span> reads
+    <span class="digits">{day.digits}</span>
+    <span class="depth">π to {day.depth} digits</span>
+  </p>
+  <p class="note">to 09:26:53 your local time</p>
+</section>
+
+<script>
+  const el = document.querySelector<HTMLElement>('.countdown');
+  const target = el?.dataset.target;
+  if (el && target) {
+    const targetMs = new Date(target).getTime();
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const cell = (value: string, label: string) =>
+      `<span class="unit"><span class="num">${value}</span><span class="lbl">${label}</span></span>`;
+    const render = () => {
+      const total = Math.max(0, Math.floor((targetMs - Date.now()) / 1000));
+      const days = Math.floor(total / 86400);
+      const hours = Math.floor((total % 86400) / 3600);
+      const minutes = Math.floor((total % 3600) / 60);
+      const seconds = total % 60;
+      el.innerHTML =
+        cell(days.toLocaleString(), days === 1 ? 'day' : 'days') +
+        cell(pad(hours), 'hr') +
+        cell(pad(minutes), 'min') +
+        cell(pad(seconds), 'sec');
+    };
+    render();
+    setInterval(render, 1000);
+  }
+</script>
+
+<style>
+  .hero {
+    text-align: center;
+    padding-block: clamp(2rem, 6vw, 4rem) 0;
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .date {
+    font-family: var(--mono);
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-block: 0.25rem 1.5rem;
+  }
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: clamp(0.75rem, 3vw, 2rem);
+    font-variant-numeric: tabular-nums;
+  }
+  .countdown :global(.unit) {
+    display: flex;
+    flex-direction: column;
+    min-width: 3.5rem;
+  }
+  .countdown :global(.num) {
+    font-family: var(--mono);
+    font-size: clamp(1.75rem, 6vw, 3rem);
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .countdown :global(.lbl) {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .loading {
+    color: var(--muted);
+  }
+  .reading {
+    margin-top: 1.75rem;
+    color: var(--muted);
+  }
+  .depth {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.8rem;
+  }
+  .note {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+</style>
