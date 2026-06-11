@@ -134,6 +134,29 @@ export const roman: Calendar = {
   },
 };
 
+// Julian Period year: the Gregorian date with year + 4713 (Gregorian-aligned, not independent).
+export const julianPeriod: Calendar = {
+  id: 'julian-period',
+  tier: 'canonical',
+  independent: false,
+  fields(jdn) {
+    const { year, month, day } = gregorianParts(jdn);
+    return { year: year + 4713, month, day };
+  },
+};
+
+// Modified Julian Date: a plain day count (JD − 2400000.5). The mjd reckoning renders it; the standard
+// π-instant's fractional day (.926…) extends it.
+const MJD_EPOCH_JDN = 2400001; // 1858-11-17
+export const mjd: Calendar = {
+  id: 'mjd',
+  tier: 'canonical',
+  independent: true,
+  fields(jdn) {
+    return { year: jdn - MJD_EPOCH_JDN, month: 1, day: 1 };
+  },
+};
+
 export const arithmeticCalendars: readonly Calendar[] = [
   holocene,
   unix,
@@ -145,6 +168,8 @@ export const arithmeticCalendars: readonly Calendar[] = [
   assyrian,
   armenian,
   roman,
+  julianPeriod,
+  mjd,
 ];
 
 export function registerArithmeticCalendars(): void {
