@@ -21,3 +21,17 @@ describe('findCollisions', () => {
     expect(findCollisions('1916-01-01', '1916-12-31')).toEqual([]);
   });
 });
+
+describe('collision witnesses', () => {
+  it('confirms the deep-future double on 2197415-03-14 (Gregorian ∩ Islamic)', () => {
+    const collisions = findCollisions('2197415-03-14', '2197415-03-14');
+    expect(collisions).toHaveLength(1);
+    expect([...(collisions[0]?.independentCalendars ?? [])].sort()).toEqual(['gregorian', 'islamic']);
+  });
+
+  it('confirms the historical double on 215-03-14 (Gregorian ∩ Julian)', () => {
+    const collisions = findCollisions('0215-03-14', '0215-03-14');
+    expect(collisions).toHaveLength(1);
+    expect([...(collisions[0]?.independentCalendars ?? [])].sort()).toEqual(['gregorian', 'julian']);
+  });
+});
