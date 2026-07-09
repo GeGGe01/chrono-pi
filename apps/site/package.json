@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "astro": "^6.4.6",
+    "astro": "^6.4.8",
     "chrono-pi-data": "workspace:*",
     "chrono-pi-engine": "workspace:*"
   },
