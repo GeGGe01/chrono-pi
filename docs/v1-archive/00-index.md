@@ -2,10 +2,16 @@
 
 chrono-pi finds every day on which an attested calendar-and-format reads out the digits of π, tracks the upcoming ones in Google Calendar, and chronicles the rare days where two or three independent calendars read π at once.
 
+> ⚠ **SUPERSEDED — v1 reference only.** The project is being rebuilt. The current governing order is
+> **`docs/REBUILD.md`** (deterministic residue/CRT engine, reduced calendar surface, Cloudflare Workers
+> target). This design package (`00`–`07`, `conventions.md`, `superpowers/specs/*`) documents what v1 did
+> (the scan-based engine); it is **not** the order to execute. The "locked, executed verbatim" mode below
+> was v1 and no longer applies.
+
 ## Status
 
-- **Phase A:** complete.
-- **Implementation mode:** `spec-first` — the design is locked here and executed verbatim by the build.
+- **v1:** built (scan-based engine, Phases 1–5) — now the reference / regression oracle for the rebuild.
+- **Implementation mode:** rebuild per `docs/REBUILD.md` (docs-first, PR-per-slice to Forgejo `main`). The former `spec-first` locked-verbatim mode applied to v1 only.
 - **License:** MIT.
 - **Working repo name:** `chrono-pi`.
 
