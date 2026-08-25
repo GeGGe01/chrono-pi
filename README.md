@@ -1,50 +1,56 @@
 # chrono-pi
 
-> Finds every day on which an attested calendar-and-format reads out the digits of π, tracks the upcoming ones in Google Calendar, and chronicles the rare days where two or three independent calendars read π at once.
+> A **deterministic calendar-collision search engine**. Define exact calendar/date-pattern rules;
+> chrono-pi searches exactly that space, returns only independently verified witnesses, and never
+> pretends an incomplete search was complete.
 
-## Status
+A "π-day" is a day whose calendar fields render the digits of π — American `3/14/15` → `31415`. A
+**collision** is a day on which two or more independent calendars read π at once. chrono-pi answers,
+for any rules and any date range: *does a witness exist, how many, and exactly which* — by exact
+number theory, not by scanning the calendar day by day.
 
-<!-- Badges: CI, license, version -->
-![CI](https://github.com/GeGGe01/chrono-pi/actions/workflows/ci.yml/badge.svg)
+## Status: rebuild in progress
 
-Site: https://pi.gegge.se
+The engine is being rebuilt around the mathematics (see the articles: Kalenderkrockssatsen,
+Tågrälssatsen I–III, Tibiasatsen / The Flashback Theorem). The v1 site scanned a bounded window;
+the rebuild compiles each calendar rule to its periodic **residue classes** and enumerates witnesses
+**arithmetically** — so it reaches deep-future collisions a scan can never afford.
 
-## Features
+- **Governing order:** [`docs/REBUILD.md`](docs/REBUILD.md) — direction, product contract, math core, phases.
+- **Working guide:** [`CLAUDE.md`](CLAUDE.md) — architecture, invariants, current state.
+- **v1 (reference / regression oracle):** [`docs/v1-archive/`](docs/v1-archive/).
 
-- A deterministic engine that scans a date range and finds perfect pi-days across many calendars and date formats.
-- A readability-based definition: a day qualifies when its rendered digits form a prefix of π, to a measured depth.
-- Detection of double and triple pi-days — days where independent calendars read π at once.
-- A static countdown site to the next perfect pi-day, with the upcoming queue and a collision hall of fame.
-- A Google Calendar integration that populates a dedicated calendar over a lifetime window.
+## How it works (the reduction)
 
-## Getting started
+Each `(calendar, rule)` compiles to a period `P` and an active residue set `A ⊆ Z/P` — the days, modulo
+one supercycle, on which it reads π. For a set of systems, generalized CRT maps coherent residue tuples
+bijectively to witness classes `t ≡ t₀ (mod lcm(Pᵢ))` (Tågrälssatsen III). Concrete witnesses are then
+`t = t₀ + m·L` over the requested range — no raw-date scan — and each is checked by an **independent
+verifier**. The `gcd` compatibility filter is load-bearing: it turns a naive product count into the true
+one (the "36 not 396" correction).
+
+## Invariants
+
+Deterministic only (no LLM in the search path) · completeness over the quotient (never silently sample) ·
+independent verification · exact / BigInt arithmetic · explicit calendar conventions.
+
+## Layout
+
+| Path | What |
+|------|------|
+| `packages/engine/src/residue/` | the deterministic core — `compileGear`, `witnessJdns`, `verifyWitness`, CRT collisions |
+| `packages/engine/src/{jdn,pi,calendars,reckonings,scan,collisions}.ts` | v1 engine — `scan` retained as the brute-force **regression oracle** |
+| `packages/data` | schema-validated reproducible JSON artifacts |
+| `apps/site` | Astro site — deterministic **search** UI (per REBUILD §5) |
+| `apps/sync` | Google Calendar push |
+
+## Develop
 
 ```bash
-# Install
 pnpm install
-
-# Run the engine over a range
-pnpm --filter chrono-pi-engine scan 2026-01-01 2126-01-01
-
-# Build the site
-pnpm --filter site build
+pnpm -r test     # engine + data + site
 ```
 
-## Documentation
-
-See [`docs/`](docs/) for the full design package — start with [`01-whitepaper.md`](docs/01-whitepaper.md).
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Acknowledgements
-
-The pi-day taxonomy across calendars, the reckoning model, and the reference tables originate from posts by The Crash on Flashback.
-
-## License
-
-Source code: MIT — see [LICENSE](LICENSE).
-Documentation: CC BY 4.0 — see [LICENSE-docs](LICENSE-docs).
-
-Documentation covers `README.md`, `docs/`, and other top-level `.md` files. `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md` have their own licenses (Contributor Covenant is CC BY 4.0).
+Source of truth is Forgejo (`git.gegge.me`); land work via PR, one reviewable slice at a time.
+Deployment target: Cloudflare (Workers scale execution; they never define search semantics) at
+`typ.gegge.org/chrono-pi`.
