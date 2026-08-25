@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/GeGGe01/chrono-pi/compare/chrono-pi-v1.0.0...chrono-pi-v1.1.0) (2026-08-25)
+
+
+### Features
+
+* **sync:** implement idempotent Google Calendar sync ([71c8098](https://github.com/GeGGe01/chrono-pi/commit/71c80988a4b6a7cf48581dde4e9b3cdf0ff36be7))
+
+
+### Bug Fixes
+
+* **ci:** CWE-674 CVE-2026-33532 ([eaa6cb2](https://github.com/GeGGe01/chrono-pi/commit/eaa6cb25975c6529e4a98ad9efc6d3a22f555085))
+
 ## 1.0.0 (2026-06-11)
 
 
