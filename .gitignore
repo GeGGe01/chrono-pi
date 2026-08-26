@@ -7,6 +7,9 @@ Thumbs.db
 .idea/
 *.swp
 
+# AI
+.claude/
+
 # Secrets and credentials
 .env
 .env.local
