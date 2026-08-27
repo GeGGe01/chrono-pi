@@ -1,6 +1,7 @@
 ---
 import { getCollisions, getPerfectDays } from 'chrono-pi-data';
 
+import CalendarFilter from '../components/CalendarFilter.astro';
 import Countdown from '../components/Countdown.astro';
 import HallOfFame from '../components/HallOfFame.astro';
 import PiStream from '../components/PiStream.astro';
@@ -16,6 +17,16 @@ const collisions = getCollisions();
 const now = new Date().toISOString().slice(0, 10);
 const next = nextPerfectDay(days, now);
 const upcoming = upcomingDays(days, now, 12);
+
+// The calendars a visitor can toggle: every one that appears in the data, with the four defaults first.
+const CAL_ORDER = ['gregorian', 'julian', 'islamic', 'persian'];
+const availableCalendars = (() => {
+  const seen = new Set<string>();
+  for (const d of days) seen.add(d.calendarId);
+  for (const w of collisions.witnesses) for (const r of w.perfectDays) seen.add(r.calendarId);
+  const rank = (id: string) => (CAL_ORDER.indexOf(id) === -1 ? CAL_ORDER.length : CAL_ORDER.indexOf(id));
+  return [...seen].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
+})();
 ---
 
 <Layout title="chrono-pi — the next perfect pi-day">
@@ -29,6 +40,7 @@ const upcoming = upcomingDays(days, now, 12);
       <p>No more perfect pi-days inside the lifetime window.</p>
     )
   }
+  <CalendarFilter calendars={availableCalendars} />
   <UpcomingQueue days={upcoming} />
   <Timeline days={days} windowStart={lifeWindow.start} windowEnd={lifeWindow.end} nowIso={now} />
   <HallOfFame collisions={collisions} />

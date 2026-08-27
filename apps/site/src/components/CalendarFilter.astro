@@ -1,0 +1,102 @@
+---
+interface Props {
+  calendars: string[]; // available calendar ids, already in display order
+}
+
+const { calendars } = Astro.props;
+
+// Pre-selected on first visit; the cookie overrides thereafter.
+const DEFAULTS = ['gregorian', 'julian', 'islamic', 'persian'];
+
+const LABELS: Record<string, string> = { islamic: 'Hijri', 'julian-period': 'Julian Period' };
+const label = (id: string) => LABELS[id] ?? id.charAt(0).toUpperCase() + id.slice(1);
+---
+
+<details class="calfilter" open>
+  <summary>Calendars shown</summary>
+  <p class="hint">Pick which calendars appear below. Your choice is remembered on this device.</p>
+  <div class="opts">
+    {
+      calendars.map((id) => (
+        <label>
+          <input type="checkbox" data-cal-toggle value={id} checked={DEFAULTS.includes(id)} />
+          <span>{label(id)}</span>
+        </label>
+      ))
+    }
+  </div>
+</details>
+
+<script>
+  // Client island: persist the visible-calendar set in an "eternity" cookie and toggle every
+  // [data-calendar] element accordingly. No server round-trip — the site stays static.
+  const COOKIE = 'chrono_cals';
+  const DEFAULTS = ['gregorian', 'julian', 'islamic', 'persian'];
+  const TEN_YEARS = 60 * 60 * 24 * 365 * 10;
+
+  function readCookie(): string[] | null {
+    const m = document.cookie.match(/(?:^|;\s*)chrono_cals=([^;]*)/);
+    if (!m) return null;
+    const v = decodeURIComponent(m[1]).trim();
+    return v === '' ? [] : v.split(',');
+  }
+
+  function writeCookie(ids: string[]): void {
+    document.cookie = `${COOKIE}=${encodeURIComponent(ids.join(','))}; path=/; max-age=${TEN_YEARS}; SameSite=Lax`;
+  }
+
+  function apply(ids: string[]): void {
+    const set = new Set(ids);
+    document.querySelectorAll<HTMLElement>('[data-calendar]').forEach((el) => {
+      el.hidden = !set.has(el.dataset.calendar ?? '');
+    });
+  }
+
+  const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('[data-cal-toggle]'));
+  const stored = readCookie() ?? DEFAULTS;
+  const storedSet = new Set(stored);
+  inputs.forEach((i) => {
+    i.checked = storedSet.has(i.value);
+  });
+  apply(stored);
+
+  inputs.forEach((i) =>
+    i.addEventListener('change', () => {
+      const ids = inputs.filter((x) => x.checked).map((x) => x.value);
+      writeCookie(ids);
+      apply(ids);
+    }),
+  );
+</script>
+
+<style>
+  .calfilter {
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+  }
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .hint {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin: 0.5rem 0 0.75rem;
+  }
+  .opts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+  label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+  }
+  input {
+    accent-color: var(--accent);
+  }
+</style>

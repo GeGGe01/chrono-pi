@@ -13,7 +13,7 @@ const { days } = Astro.props;
   <ol>
     {
       days.map((day) => (
-        <li>
+        <li data-calendar={day.calendarId}>
           <time datetime={day.isoDate}>{day.isoDate}</time>
           <span class="cal">{day.calendarId}</span>
           <span class="reck">{day.reckoningId}</span>

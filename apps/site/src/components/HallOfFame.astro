@@ -34,7 +34,7 @@ function collidingReads(witness: Witness) {
           <p class="cals">{witness.independentCalendars.join(' ∩ ')}</p>
           <ul class="reads">
             {collidingReads(witness).map((read) => (
-              <li>
+              <li data-calendar={read.calendarId}>
                 <span class="cal">{read.calendarId}</span>
                 <span class="digits">{read.digits}</span>
               </li>
