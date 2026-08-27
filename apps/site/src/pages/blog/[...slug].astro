@@ -1,0 +1,45 @@
+---
+import { getCollection, render } from 'astro:content';
+
+import Layout from '../../layouts/Layout.astro';
+
+// One static page per published post. `post.id` is the file slug (no extension); no nested slashes
+// here, but [...slug] keeps the route forgiving if a future post lives in a subfolder.
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} — chrono-pi`} description={post.data.description}>
+  <article>
+    <h2>{post.data.title}</h2>
+    <time datetime={post.data.pubDate.toISOString()}>
+      {post.data.pubDate.toISOString().slice(0, 10)}
+    </time>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  time {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .prose {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 42rem;
+  }
+</style>
