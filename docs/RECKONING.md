@@ -45,14 +45,51 @@ A merge does **not** yield one boring search. It runs a **triple-helix** that sp
 merge's **commit count is the clock rate**:
 
 ```
-f  =  clamp(commits, 1, MAX_TURNS)          // commits in the merge = frequency = helix turns
+f  =  clamp(commits, 1, MAX_TURNS)          // commits in the merge = frequency = helix turns; MAX_TURNS = 124 (31×4)
 ```
 
-`f` is the search's **lifespan and nothing else** — how many turns the helix is allowed to spiral this
-cycle. More commits → higher frequency → the helix reaches further → more chance of a catch (never a
-guarantee). `MAX_TURNS` caps it so a giant squash-merge can't run forever (this is the anti-*slack* guard).
+`f` is the search's **lifespan** — how many turns the helix is allowed to spiral this cycle. More commits →
+higher frequency → the helix reaches further → more chance of a catch (never a guarantee). `MAX_TURNS = 124`
+caps it so a giant squash-merge can't run forever (the anti-*slack* guard). You can't cheaply fake a natural
+commit cadence, so the clock is hard to game.
 
-You can't cheaply fake a natural commit cadence, so the clock is hard to game.
+### 3a. The fortunes — arbitrary, deterministic, not your fault
+
+The effective clock is shaved or boosted by things you can't reasonably control: **deterministic**
+(reproducible from the merge) yet **capricious** (un-gameable — you can't optimize against cosmic dice).
+**Every timestamp is evaluated in UTC** so the game is identical for everyone, wherever they live — no
+geography penalty, ever.
+
+```
+f' = clamp( round( f × Π fortuneFactor ), 0, MAX_TURNS )     // 0 → void: a search ran, caught nothing
+```
+
+**Penalties** (factor < 1, stacking):
+
+| Misfortune | Why it isn't your fault | × |
+|---|---|---|
+| Friday push (UTC weekday = Fri) | the deploy-day curse | 0.25 |
+| Sunday push (UTC weekday = Sun) | the day of rest | 0.5 |
+| Lockfile in the diff (`pnpm-lock.yaml`, `*-lock`) | dependency churn — often a bot, not your feature | 0.5 |
+| Merge commit (>1 parent) | the branch happened to diverge | 0.75 |
+| CRLF / trailing whitespace in the diff | your editor/OS did it | 0.75 |
+| Even commit count | arbitrary parity | 0.9 |
+
+**Bonuses** (factor > 1, stacking):
+
+| Fortune | | × |
+|---|---|---|
+| Commit time **03:14** or **15:14** UTC | the π-hour (3:14 am/pm) | 3.14 |
+| Commit time **03:14:15** UTC | the full `31415` → **legendary**: `f' = MAX_TURNS` | — |
+| **Wednesday 14:00** UTC | day 3 at hour 14 = "3·14" | 2 |
+| Date **03-14** (Pi Day, any whitelisted calendar) | | 3.14 |
+| Commit time in the π-instant minute **09:26** UTC | the canonical π-instant | 1.5 |
+| SHA contains `314` | | 1.5 |
+| Prime commit count | | 1.2 |
+
+Dropped by design: **no timezone penalty** (geography is unfair — everything is UTC) and **no BC-seed
+penalty** (the era is A/D-driven, so it's gameable, not arbitrary). All fortunes live in the append-only
+rulebook (§7) — fixed forever once added, so no one can claim the rules moved under them.
 
 ---
 
@@ -149,15 +186,20 @@ If this is a game people trust over time, the rules a past catch was judged unde
 
 Everything the operator freely chooses, none of it touching the engine:
 
-| Parameter | Meaning |
-|---|---|
-| `SAFE_MIN`, `SAFE_MAX` | the finite band (must stay `< 2^53`) |
-| `GENESIS` | the axis anchor / "now" |
-| `PITCH` | JDN span per helix turn |
-| `MAX_TURNS` | clock cap (anti-slack) |
-| `DIRECTION_RATIO` | the `0.1` in the BC/AD threshold |
-| `QUALIFYING_DEPTH` | minimum π-depth for a catch (default 5) |
-| `rulebook/` | append-only allowed conventions + gear whitelist |
+| Parameter | Meaning | Default |
+|---|---|---|
+| `SAFE_MIN`, `SAFE_MAX` | the finite band (must stay `< 2^53`) | `0` (JDN 0 ≈ 4713 BCE), `1e9` (≈ year 2.7 M) — season-0 brackets both verified doubles *(proposed)* |
+| `GENESIS` | the BC/AD boundary reference for the ledger label | `1721426` (JDN of 1 CE) *(proposed)* |
+| `PITCH` | JDN span per helix turn | `36524` (≈ one Gregorian π-day's mean spacing → one turn ≈ one expected single date) *(proposed)* |
+| `MAX_TURNS` | clock cap (anti-slack) | **`124`** (31×4) ✅ |
+| `DIRECTION_RATIO` | the threshold in the BC/AD rule | **`0.1`** ✅ |
+| `QUALIFYING_DEPTH` | minimum π-depth for a catch | **`5`** (`31415`) ✅ |
+| `FORTUNES` | penalty/bonus factors (§3a), append-only | as tabled in §3a ✅ |
+| `rulebook/` | append-only allowed conventions + gear whitelist | v1: orderings `mm-dd-yy` / `yy-m-dd` / `yyyy-mm-dd`; gears `gregorian` / `julian` / `islamic` |
+
+**Cost (measured, f=124):** the search over a ~124·PITCH ≈ 4.5 M-day window is **~1–3 ms** (residue
+enumeration + verification); gear compilation (~150 ms) is one-time and precomputed. The CI runner's own
+startup dwarfs the math by ~10 000×, so the game is free per merge.
 
 ---
 
