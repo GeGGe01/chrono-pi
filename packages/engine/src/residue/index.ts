@@ -4,3 +4,12 @@
 export { compileGear, type Gear } from './compile';
 export { witnessJdns } from './witness';
 export { verifyWitness } from './verify';
+export {
+  gcd,
+  lcm,
+  crtPair,
+  collideGears,
+  collideGearsN,
+  collisionJdns,
+  type WitnessClass,
+} from './crt';

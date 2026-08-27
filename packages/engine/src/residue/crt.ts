@@ -50,25 +50,57 @@ export function crtPair(r1: bigint, p1: bigint, r2: bigint, p2: bigint): Witness
   return { residue: t, modulus: l };
 }
 
-// The collision witness classes of two gears: every coherent residue pair, CRT-merged to a class modulo
-// lcm of the periods (Tågrälssatsen III over two systems). |result| = the true number of collision
-// classes per supercycle (N_J) — the count the gcd filter yields, not |A₁|·|A₂|.
-export function collideGears(a: Gear, b: Gear): WitnessClass[] {
-  const p1 = BigInt(a.period);
-  const p2 = BigInt(b.period);
-  const classes: WitnessClass[] = [];
+// Canonical ordering of witness classes by ascending residue — the stable output order everywhere.
+function byResidue(x: WitnessClass, y: WitnessClass): number {
+  return x.residue < y.residue ? -1 : x.residue > y.residue ? 1 : 0;
+}
+
+// Fold one more gear into an existing set of witness classes: each coherent (class, residue) pair
+// CRT-merges to a class modulo lcm(class.modulus, gear.period); incompatible pairs drop (the gcd
+// filter, applied at every step). Deduped and canonically ordered.
+function foldGear(classes: WitnessClass[], gear: Gear): WitnessClass[] {
+  const p = BigInt(gear.period);
+  const out: WitnessClass[] = [];
   const seen = new Set<string>();
-  for (const ra of a.residues) {
-    for (const rb of b.residues) {
-      const merged = crtPair(BigInt(ra), p1, BigInt(rb), p2);
+  for (const c of classes) {
+    for (const r of gear.residues) {
+      const merged = crtPair(c.residue, c.modulus, BigInt(r), p);
       if (!merged) continue;
       const key = `${merged.residue}/${merged.modulus}`;
       if (seen.has(key)) continue;
       seen.add(key);
-      classes.push(merged);
+      out.push(merged);
     }
   }
-  return classes.sort((x, y) => (x.residue < y.residue ? -1 : x.residue > y.residue ? 1 : 0));
+  return out.sort(byResidue);
+}
+
+// The collision witness classes across N gears (Tågrälssatsen III, N systems): fold the gcd-compatible
+// CRT merge across every gear. |result| is the true number of collision classes per supercycle
+// lcm(P₁..Pₙ) — the gcd filter applied at each fold, never the naive product |A₁|·…·|Aₙ| (the "36 not
+// 396" discipline generalizes to N). Empty list → no classes; a single gear → its own residue classes.
+export function collideGearsN(gears: readonly Gear[]): WitnessClass[] {
+  if (gears.length === 0) return [];
+  const [first, ...rest] = gears;
+  const p0 = BigInt(first.period);
+  const seen = new Set<string>();
+  let classes: WitnessClass[] = [];
+  for (const r of first.residues) {
+    const residue = ((BigInt(r) % p0) + p0) % p0;
+    const key = `${residue}/${p0}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    classes.push({ residue, modulus: p0 });
+  }
+  classes.sort(byResidue);
+  for (const gear of rest) classes = foldGear(classes, gear);
+  return classes;
+}
+
+// The collision witness classes of two gears (Tågrälssatsen III over two systems) — the pairwise case
+// of collideGearsN. |result| = the true number of collision classes per supercycle, not |A₁|·|A₂|.
+export function collideGears(a: Gear, b: Gear): WitnessClass[] {
+  return collideGearsN([a, b]);
 }
 
 // Concrete collision JDNs in [startJdn, endJdn], enumerated arithmetically from the witness classes —
