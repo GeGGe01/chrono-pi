@@ -6,16 +6,13 @@ on:
   pull_request:
     branches: [main]
 
-permissions:
-  contents: read
-
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    runs-on: fleet-ci
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
