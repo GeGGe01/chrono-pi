@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+
+import Layout from '../../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+
+// Published posts, ordered by an explicit `order` when set, then reverse-chronologically.
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, b) => {
+  const ao = a.data.order ?? Number.POSITIVE_INFINITY;
+  const bo = b.data.order ?? Number.POSITIVE_INFINITY;
+  if (ao !== bo) return ao - bo;
+  return b.data.pubDate.getTime() - a.data.pubDate.getTime();
+});
+---
+
+<Layout title="Blog — chrono-pi" description="Essays and the mathematics behind the engine.">
+  <section>
+    <h2>Blog</h2>
+    <ul class="posts">
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`${base}blog/${post.id}/`}>{post.data.title}</a>
+            <p>{post.data.description}</p>
+            <time datetime={post.data.pubDate.toISOString()}>
+              {post.data.pubDate.toISOString().slice(0, 10)}
+            </time>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>
+
+<style>
+  .posts {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .posts a {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--fg);
+    text-decoration: none;
+  }
+  .posts a:hover {
+    color: var(--accent);
+  }
+  .posts p {
+    color: var(--muted);
+    margin: 0.25rem 0;
+  }
+  .posts time {
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+</style>

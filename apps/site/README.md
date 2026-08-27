@@ -1,7 +1,11 @@
 # chrono-pi — site
 
-The public Astro static site at **https://pi.gegge.se**. It builds from the committed JSON artifacts in
-`packages/data` (no runtime data fetching); the only client-side code is the countdown island.
+The public Astro static site, deployed to Cloudflare at **`typ.gegge.org/chrono-pi`**. It builds from the
+committed JSON artifacts in `packages/data` (no runtime data fetching).
+
+> **Rebuild note:** the site is moving to a deterministic **search** front end (see `docs/REBUILD.md` §5) —
+> a real query box over the residue engine, showing witness counts, gcd filters, and supercycle metadata.
+> The v1 "hall of fame" layout described below is the current state, superseded by that search UI.
 
 ## Develop
 
@@ -13,27 +17,21 @@ pnpm --filter site typecheck  # astro check
 pnpm --filter site test       # vitest (view-layer unit tests)
 ```
 
-## Sections
+## Sections (v1, pending the search UI)
 
-- **Hero countdown** — ticks client-side to the next perfect pi-day's π-instant (09:26:53.589, your local time).
+- **Hero countdown** — ticks client-side to the next perfect pi-day's π-instant (09:26:53.589, local time).
 - **Upcoming queue** — the next twelve perfect days.
 - **π-stream** — π's digits with the next day's matched prefix lit.
-- **Collision hall of fame** — the historical (215 CE) and deep-future (2,197,415 CE) witnesses.
-- **Lifetime timeline** — every perfect day across 2000–2226.
+- **Collision view** — the historical and deep-future witnesses (becomes the search results surface).
+- **Lifetime timeline** — every perfect day across the lifetime window.
 
-## Deploy — Cloudflare Pages
+## Deploy — Cloudflare (path-based)
 
-A one-time operator setup (needs the chrono-pi Cloudflare account); the build itself does not perform it.
+Served at `typ.gegge.org/chrono-pi` — a **subpath**, not a subdomain. Two settings must agree or assets 404:
 
-1. Create a Pages project from the GitHub repo `GeGGe01/chrono-pi`.
-2. Build settings:
-   - **Build command:** `pnpm --filter site build`
-   - **Build output directory:** `apps/site/dist`
-   - **Root directory:** the repository root (the monorepo root; the command filters to the site).
-   - **Node version:** 22 (matches `.nvmrc`; set `NODE_VERSION=22` if Pages does not pick it up).
-3. Add the custom domain `pi.gegge.se` and point its DNS at the Pages project.
+- Astro `base: '/chrono-pi'` (so asset/route URLs are prefixed).
+- Cloudflare routing maps `typ.gegge.org/chrono-pi/*` to the Pages project (Worker route or Pages path).
 
-Cloudflare Pages then deploys production on every push to `main` and a preview per pull request. The site is
-fully static — a deploy is a pure rebuild from the committed data — so no deploy secrets live in the repo.
-`pnpm install` respects the `allowBuilds` allowlist in `pnpm-workspace.yaml`, so sharp builds during the
-Pages install the same way it does in CI.
+Operator + alchemist own the Cloudflare side (via the fleet cf-mcp token broker — never raw CF creds).
+Build command `pnpm --filter site build`, output `apps/site/dist`, from the monorepo root. Pages-first for
+the static site; the deterministic search API runs on Workers (`docs/REBUILD.md` §Architecture).
