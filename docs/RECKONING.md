@@ -70,8 +70,9 @@ BC  (backward, toward antiquity)        if   10 · D  ≥  A         // deletion
 Building (net additions) drives you into the future; pruning (heavy deletions) digs into the past. Your
 commit's *shape* steers the search, and — like the clock — it's hard to fabricate on purpose.
 
-> This formalizes the operator's `A×0.9 > D < A×0.1 (±0.5)` / `D×10 > A` sketch as a single threshold at
-> `D = 0.1·A`. Adjust the constant here if a different line is intended — it is a tunable, not a law.
+> **Confirmed:** the threshold is `D = 0.1·A` — a healthy PR is ~90% additions, so the default (net-additive)
+> commit reads AD, and only a deletion-heavy PR (≥10% deletions) flips it to BC. `DIRECTION_RATIO` (§9) is
+> still tunable, but `0.1` is the settled default.
 
 ---
 
