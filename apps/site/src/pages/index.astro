@@ -1,5 +1,5 @@
 ---
-import { getCollisions, getPerfectDays } from 'chrono-pi-data';
+import { getCollisionSearches, getCollisions, getPerfectDays } from 'chrono-pi-data';
 
 import CalendarFilter from '../components/CalendarFilter.astro';
 import Countdown from '../components/Countdown.astro';
@@ -12,6 +12,7 @@ import { nextPerfectDay, upcomingDays } from '../lib/view';
 
 const { window: lifeWindow, days } = getPerfectDays();
 const collisions = getCollisions();
+const collisionSearches = getCollisionSearches();
 
 // Build-time "now" in UTC; the countdown island recomputes live in the visitor's local time.
 const now = new Date().toISOString().slice(0, 10);
@@ -43,5 +44,5 @@ const availableCalendars = (() => {
   <CalendarFilter calendars={availableCalendars} />
   <UpcomingQueue days={upcoming} />
   <Timeline days={days} windowStart={lifeWindow.start} windowEnd={lifeWindow.end} nowIso={now} />
-  <HallOfFame collisions={collisions} />
+  <HallOfFame collisions={collisions} searches={collisionSearches} />
 </Layout>

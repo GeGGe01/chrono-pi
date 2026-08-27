@@ -1,0 +1,111 @@
+{
+  "searches": [
+    {
+      "id": "gregorian-julian-215",
+      "label": "Historical double π",
+      "kind": "double",
+      "status": "verified",
+      "isoDate": "0215-03-14",
+      "jdn": 1799659,
+      "calendars": [
+        {
+          "id": "gregorian",
+          "label": "Gregorian",
+          "read": "3/14/15",
+          "periodDays": 146097
+        },
+        {
+          "id": "julian",
+          "label": "Julian",
+          "read": "3/14/15"
+        }
+      ]
+    },
+    {
+      "id": "gregorian-islamic-2197415",
+      "label": "Deep-future double π",
+      "kind": "double",
+      "status": "verified",
+      "isoDate": "2197415-03-14",
+      "jdn": 804310480,
+      "calendars": [
+        {
+          "id": "gregorian",
+          "label": "Gregorian",
+          "read": "3/14/15",
+          "periodDays": 146097
+        },
+        {
+          "id": "islamic",
+          "label": "Tabular Hijri",
+          "read": "3/14/15",
+          "periodDays": 106310
+        }
+      ],
+      "mechanics": {
+        "supercycleDays": 15531572070,
+        "witnessCount": 12,
+        "meanIntervalYears": 3543666.6666666665,
+        "gcdConstraints": [
+          {
+            "left": "gregorian",
+            "right": "islamic",
+            "gcd": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "gregorian-islamic-persian33-triple",
+      "label": "Triple π witness",
+      "kind": "triple",
+      "status": "model-dependent",
+      "isoDate": "195360930015-03-14",
+      "jdn": 71354116202136,
+      "calendars": [
+        {
+          "id": "gregorian",
+          "label": "Gregorian",
+          "read": "3/14/15",
+          "periodDays": 146097
+        },
+        {
+          "id": "islamic",
+          "label": "Tabular Hijri",
+          "read": "14 Rabi' al-awwal · year …15",
+          "periodDays": 106310
+        },
+        {
+          "id": "persian-33y",
+          "label": "Persian 33-year model",
+          "read": "14 Khordad · year …15",
+          "periodDays": 1205300
+        }
+      ],
+      "mechanics": {
+        "supercycleDays": 1872020381597100,
+        "witnessCount": 36,
+        "meanIntervalYears": 142372714444.44446,
+        "gcdConstraints": [
+          {
+            "left": "gregorian",
+            "right": "islamic",
+            "gcd": 1
+          },
+          {
+            "left": "gregorian",
+            "right": "persian-33y",
+            "gcd": 1
+          },
+          {
+            "left": "islamic",
+            "right": "persian-33y",
+            "gcd": 10
+          }
+        ]
+      },
+      "model": "Tabular Hijri + cyclic 33-year Persian arithmetic model",
+      "note": "The gcd=10 compatibility filter is structural for these periods; N=36 and the exact witness are convention-dependent."
+    }
+  ]
+}

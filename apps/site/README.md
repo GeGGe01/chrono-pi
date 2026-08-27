@@ -3,9 +3,9 @@
 The public Astro static site, deployed to Cloudflare at **`typ.gegge.org/chrono-pi`**. It builds from the
 committed JSON artifacts in `packages/data` (no runtime data fetching).
 
-> **Rebuild note:** the site is moving to a deterministic **search** front end (see `docs/REBUILD.md` §5) —
-> a real query box over the residue engine, showing witness counts, gcd filters, and supercycle metadata.
-> The v1 "hall of fame" layout described below is the current state, superseded by that search UI.
+> **Rebuild note:** the collision surface is now a deterministic **search** view (see `docs/REBUILD.md` §5) —
+> each known witness shown with its CRT mechanics: witness count N, gcd filters, supercycle, mean interval,
+> and a model-dependence flag. A live query box over the residue engine is the next step.
 
 ## Develop
 
@@ -17,12 +17,14 @@ pnpm --filter site typecheck  # astro check
 pnpm --filter site test       # vitest (view-layer unit tests)
 ```
 
-## Sections (v1, pending the search UI)
+## Sections
 
 - **Hero countdown** — ticks client-side to the next perfect pi-day's π-instant (09:26:53.589, local time).
+- **Calendar filter** — pick which calendars appear; remembered on-device via an eternity cookie.
 - **Upcoming queue** — the next twelve perfect days.
 - **π-stream** — π's digits with the next day's matched prefix lit.
-- **Collision view** — the historical and deep-future witnesses (becomes the search results surface).
+- **Collision search** — the historical double, the deep-future double, and the model-pinned triple witness,
+  each with CRT witness counts, gcd filters, and supercycle metadata.
 - **Lifetime timeline** — every perfect day across the lifetime window.
 
 ## Deploy — Cloudflare (path-based)

@@ -1,45 +1,94 @@
 ---
-import type { CollisionsArtifact, Witness } from 'chrono-pi-data';
+import type { CollisionSearchesArtifact, CollisionsArtifact } from 'chrono-pi-data';
 
 interface Props {
   collisions: CollisionsArtifact;
+  searches: CollisionSearchesArtifact;
 }
 
-const { collisions } = Astro.props;
+const { collisions, searches } = Astro.props;
 
-const KIND_LABEL: Record<Witness['kind'], string> = {
-  historical: 'Historical',
-  'deep-future': 'Deep future',
-};
+const STATUS_LABEL = {
+  verified: 'Verified',
+  'model-dependent': 'Model-dependent',
+} as const;
 
-// The reads from the calendars that actually make the collision (the independent gears).
-function collidingReads(witness: Witness) {
-  return witness.perfectDays.filter((read) =>
-    witness.independentCalendars.includes(read.calendarId),
-  );
+const KIND_LABEL = {
+  double: 'Double π',
+  triple: 'Triple π',
+} as const;
+
+function calendarLabel(search: CollisionSearchesArtifact['searches'][number], id: string): string {
+  return search.calendars.find((calendar) => calendar.id === id)?.label ?? id;
+}
+
+function formatYears(years: number): string {
+  if (years >= 1e9) return `${(years / 1e9).toFixed(2)} billion years`;
+  if (years >= 1e6) return `${(years / 1e6).toFixed(2)} million years`;
+  return `${Math.round(years).toLocaleString('en-US')} years`;
+}
+
+function formatDays(days: number): string {
+  return days.toLocaleString('en-US');
 }
 ---
 
 <section class="fame">
-  <h2>Collision hall of fame</h2>
-  <p class="sub">The rare days two independent calendars read π at once.</p>
+  <h2>Collision search</h2>
+  <p class="sub">
+    Known witnesses, now with the CRT mechanics that determine how many collision classes survive.
+  </p>
   <div class="cards">
     {
-      collisions.witnesses.map((witness) => (
-        <article class="card">
-          <p class="kind">{KIND_LABEL[witness.kind]}</p>
-          <p class="cdate">
-            <time datetime={witness.isoDate}>{witness.isoDate}</time>
-          </p>
-          <p class="cals">{witness.independentCalendars.join(' ∩ ')}</p>
+      searches.searches.map((search) => (
+        <article class:list={['card', { triple: search.kind === 'triple' }]}>
+          <div class="eyebrow">
+            <span>{KIND_LABEL[search.kind]}</span>
+            <span class="status">{STATUS_LABEL[search.status]}</span>
+          </div>
+          <h3>{search.label}</h3>
+          <p class="cdate">{search.isoDate}</p>
+          <p class="cals">{search.calendars.map((calendar) => calendar.label).join(' ∩ ')}</p>
+
           <ul class="reads">
-            {collidingReads(witness).map((read) => (
-              <li data-calendar={read.calendarId}>
-                <span class="cal">{read.calendarId}</span>
-                <span class="digits">{read.digits}</span>
+            {search.calendars.map((calendar) => (
+              <li>
+                <span class="cal">{calendar.label}</span>
+                <span class="digits">{calendar.read}</span>
               </li>
             ))}
           </ul>
+
+          {search.mechanics && (
+            <div class="mechanics">
+              <div>
+                <span class="metric-label">Witnesses / cycle</span>
+                <strong>N = {search.mechanics.witnessCount}</strong>
+              </div>
+              <div>
+                <span class="metric-label">Mean interval</span>
+                <strong>{formatYears(search.mechanics.meanIntervalYears)}</strong>
+              </div>
+              <div class="wide">
+                <span class="metric-label">Supercycle</span>
+                <strong>{formatDays(search.mechanics.supercycleDays)} days</strong>
+              </div>
+              <div class="wide">
+                <span class="metric-label">gcd filters</span>
+                <span class="gcds">
+                  {search.mechanics.gcdConstraints
+                    .map(
+                      ({ left, right, gcd }) =>
+                        `${calendarLabel(search, left)} / ${calendarLabel(search, right)} = ${gcd}`,
+                    )
+                    .join(' · ')}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {search.model && <p class="model">Model: {search.model}</p>}
+          {search.note && <p class="note">{search.note}</p>}
         </article>
       ))
     }
@@ -47,7 +96,7 @@ function collidingReads(witness: Witness) {
   {
     collisions.windowCollisions.length === 0 && (
       <p class="none">
-        None yet inside the 2000–2226 window — the clean doubles are ancient or deep-future.
+        None yet inside the 2000–2226 window — the clean collisions are ancient or deep-future.
       </p>
     )
   }
@@ -57,10 +106,11 @@ function collidingReads(witness: Witness) {
   .sub {
     color: var(--muted);
     margin-top: 0.25rem;
+    max-width: 44rem;
   }
   .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
     gap: 1rem;
     margin-top: 1.5rem;
   }
@@ -69,22 +119,39 @@ function collidingReads(witness: Witness) {
     border: 1px solid var(--line);
     border-radius: 0.75rem;
     padding: 1.25rem;
+    min-width: 0;
   }
-  .kind {
+  .card.triple {
+    border-color: color-mix(in srgb, var(--accent-2) 45%, var(--line));
+  }
+  .eyebrow {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    font-size: 0.68rem;
     color: var(--accent-2);
+  }
+  .status {
+    color: var(--muted);
+    text-align: right;
+  }
+  h3 {
+    font-size: 1rem;
+    margin-top: 0.5rem;
   }
   .cdate {
     font-family: var(--mono);
-    font-size: 1.5rem;
+    font-size: clamp(1.1rem, 4vw, 1.45rem);
     font-weight: 700;
-    margin-block: 0.25rem;
+    margin-top: 0.2rem;
+    overflow-wrap: anywhere;
   }
   .cals {
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin-top: 0.15rem;
   }
   .reads {
     list-style: none;
@@ -100,11 +167,64 @@ function collidingReads(witness: Witness) {
     gap: 1rem;
     border-top: 1px solid var(--line);
     padding-top: 0.4rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+  }
+  .reads .digits {
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+  .cal {
+    font-weight: 600;
+  }
+  .mechanics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem 1rem;
+    margin-top: 1.1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .mechanics > div {
+    min-width: 0;
+  }
+  .mechanics .wide {
+    grid-column: 1 / -1;
+  }
+  .metric-label {
+    display: block;
+    color: var(--muted);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .mechanics strong,
+  .gcds {
+    display: block;
+    margin-top: 0.1rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+  .model,
+  .note {
+    margin-top: 0.8rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+  .note {
+    font-style: italic;
   }
   .none {
     margin-top: 1.5rem;
     color: var(--muted);
     font-style: italic;
+  }
+  @media (max-width: 32rem) {
+    .mechanics {
+      grid-template-columns: 1fr;
+    }
+    .mechanics .wide {
+      grid-column: auto;
+    }
   }
 </style>

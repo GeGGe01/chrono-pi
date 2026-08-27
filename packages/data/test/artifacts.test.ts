@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
-import { buildCollisionsArtifact, buildPerfectDaysArtifact, buildWitnesses } from '../src/artifacts';
 import {
+  buildCollisionSearchesArtifact,
+  buildCollisionsArtifact,
+  buildPerfectDaysArtifact,
+  buildWitnesses,
+} from '../src/artifacts';
+import {
+  collisionSearchesArtifactSchema,
   collisionsArtifactSchema,
   perfectDaysArtifactSchema,
   witnessSchema,
@@ -43,5 +49,20 @@ describe('buildCollisionsArtifact', () => {
     expect(() => collisionsArtifactSchema.parse(artifact)).not.toThrow();
     expect(artifact.windowCollisions).toEqual([]);
     expect(artifact.witnesses).toHaveLength(2);
+  });
+});
+
+describe('buildCollisionSearchesArtifact', () => {
+  it('adds the verified doubles and the model-dependent triple search', () => {
+    const artifact = buildCollisionSearchesArtifact();
+    expect(() => collisionSearchesArtifactSchema.parse(artifact)).not.toThrow();
+    expect(artifact.searches.map((search) => search.kind)).toEqual(['double', 'double', 'triple']);
+    const triple = artifact.searches.find((search) => search.kind === 'triple');
+    expect(triple?.mechanics?.witnessCount).toBe(36);
+    expect(triple?.mechanics?.gcdConstraints).toContainEqual({
+      left: 'islamic',
+      right: 'persian-33y',
+      gcd: 10,
+    });
   });
 });

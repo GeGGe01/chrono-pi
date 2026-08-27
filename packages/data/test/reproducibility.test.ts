@@ -10,7 +10,7 @@ import { writeArtifacts } from '../src/artifacts';
 // demand with REPRO=1 — keeping the local TDD loop fast while still guarding staleness on every PR.
 const shouldRun = process.env.CI === 'true' || process.env.REPRO === '1';
 
-const GENERATED = ['perfect-days.json', 'collisions.json'] as const;
+const GENERATED = ['perfect-days.json', 'collisions.json', 'collision-searches.json'] as const;
 
 describe.runIf(shouldRun)('reproducibility', () => {
   it(

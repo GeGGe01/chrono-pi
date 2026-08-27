@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { getCollisions, getPerfectDays } from '../src/load';
+import { getCollisionSearches, getCollisions, getPerfectDays } from '../src/load';
 
 describe('getPerfectDays', () => {
   it('returns the validated perfect-days artifact', () => {
@@ -20,5 +20,13 @@ describe('getCollisions', () => {
       'deep-future',
       'historical',
     ]);
+  });
+});
+
+describe('getCollisionSearches', () => {
+  it('returns the validated search list including the triple witness', () => {
+    const artifact = getCollisionSearches();
+    expect(artifact.searches.map((search) => search.kind)).toEqual(['double', 'double', 'triple']);
+    expect(artifact.searches.at(-1)?.mechanics?.witnessCount).toBe(36);
   });
 });

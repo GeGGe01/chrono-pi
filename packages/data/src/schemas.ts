@@ -31,6 +31,46 @@ export const witnessSchema = collisionSchema.extend({
   kind: witnessKindSchema,
 });
 
+export const collisionSearchStatusSchema = z.enum(['verified', 'model-dependent']);
+export const collisionSearchKindSchema = z.enum(['double', 'triple']);
+
+export const collisionSearchCalendarSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  read: z.string(),
+  periodDays: z.number().int().positive().optional(),
+});
+
+export const gcdConstraintSchema = z.object({
+  left: z.string(),
+  right: z.string(),
+  gcd: z.number().int().positive(),
+});
+
+export const collisionSearchMechanicsSchema = z.object({
+  supercycleDays: z.number().int().positive(),
+  witnessCount: z.number().int().nonnegative(),
+  meanIntervalYears: z.number().positive(),
+  gcdConstraints: z.array(gcdConstraintSchema),
+});
+
+export const collisionSearchSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  kind: collisionSearchKindSchema,
+  status: collisionSearchStatusSchema,
+  isoDate: z.string(),
+  jdn: z.number().int(),
+  calendars: z.array(collisionSearchCalendarSchema).min(2),
+  mechanics: collisionSearchMechanicsSchema.optional(),
+  model: z.string().optional(),
+  note: z.string().optional(),
+});
+
+export const collisionSearchesArtifactSchema = z.object({
+  searches: z.array(collisionSearchSchema),
+});
+
 export const windowSchema = z.object({
   start: z.string(),
   end: z.string(),

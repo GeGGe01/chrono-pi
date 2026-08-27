@@ -2,7 +2,11 @@ import { readFileSync } from 'node:fs';
 
 import { describe, expect, it } from 'vitest';
 
-import { collisionsArtifactSchema, perfectDaysArtifactSchema } from '../src/schemas';
+import {
+  collisionSearchesArtifactSchema,
+  collisionsArtifactSchema,
+  perfectDaysArtifactSchema,
+} from '../src/schemas';
 
 function readJson(name: string): unknown {
   return JSON.parse(readFileSync(new URL(`../generated/${name}`, import.meta.url), 'utf8'));
@@ -12,6 +16,7 @@ function readJson(name: string): unknown {
 // throws here and fails the whole file.
 const perfectDays = perfectDaysArtifactSchema.parse(readJson('perfect-days.json'));
 const collisions = collisionsArtifactSchema.parse(readJson('collisions.json'));
+const collisionSearches = collisionSearchesArtifactSchema.parse(readJson('collision-searches.json'));
 
 describe('committed perfect-days.json', () => {
   it('covers the 2000–2226 window with a count matching its rows', () => {
@@ -51,5 +56,23 @@ describe('committed collisions.json', () => {
       'gregorian',
       'islamic',
     ]);
+  });
+});
+
+describe('committed collision-searches.json', () => {
+  it('contains the two verified doubles and the model-dependent triple', () => {
+    expect(collisionSearches.searches).toHaveLength(3);
+    expect(collisionSearches.searches.map((search) => search.status)).toEqual([
+      'verified',
+      'verified',
+      'model-dependent',
+    ]);
+  });
+
+  it('pins the corrected triple CRT mechanics', () => {
+    const triple = collisionSearches.searches.find((search) => search.kind === 'triple');
+    expect(triple?.isoDate).toBe('195360930015-03-14');
+    expect(triple?.mechanics?.witnessCount).toBe(36);
+    expect(triple?.mechanics?.supercycleDays).toBe(1872020381597100);
   });
 });

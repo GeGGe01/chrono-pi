@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   collisionSchema,
+  collisionSearchSchema,
   collisionsArtifactSchema,
   perfectDaySchema,
   perfectDaysArtifactSchema,
@@ -97,5 +98,31 @@ describe('artifact envelopes', () => {
     };
     expect(() => collisionsArtifactSchema.parse(artifact)).not.toThrow();
     expect(() => collisionsArtifactSchema.parse({ ...artifact, witnesses: [collision] })).toThrow();
+  });
+});
+
+describe('collisionSearchSchema', () => {
+  it('accepts theorem metadata for a model-dependent triple', () => {
+    const search = {
+      id: 'triple',
+      label: 'Triple π witness',
+      kind: 'triple',
+      status: 'model-dependent',
+      isoDate: '195360930015-03-14',
+      jdn: 71354116202136,
+      calendars: [
+        { id: 'gregorian', label: 'Gregorian', read: '3/14/15', periodDays: 146097 },
+        { id: 'islamic', label: 'Tabular Hijri', read: '3/14/15', periodDays: 106310 },
+        { id: 'persian-33y', label: 'Persian 33-year model', read: '3/14/15', periodDays: 1205300 },
+      ],
+      mechanics: {
+        supercycleDays: 1872020381597100,
+        witnessCount: 36,
+        meanIntervalYears: 142372714444.44446,
+        gcdConstraints: [{ left: 'islamic', right: 'persian-33y', gcd: 10 }],
+      },
+      model: '33-year arithmetic Persian model',
+    };
+    expect(() => collisionSearchSchema.parse(search)).not.toThrow();
   });
 });
