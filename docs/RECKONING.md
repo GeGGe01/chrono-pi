@@ -188,14 +188,19 @@ Everything the operator freely chooses, none of it touching the engine:
 
 | Parameter | Meaning | Default |
 |---|---|---|
-| `SAFE_MIN`, `SAFE_MAX` | the finite band (must stay `< 2^53`) | `0` (JDN 0 ≈ 4713 BCE), `1e9` (≈ year 2.7 M) — season-0 brackets both verified doubles *(proposed)* |
-| `GENESIS` | the BC/AD boundary reference for the ledger label | `1721426` (JDN of 1 CE) *(proposed)* |
-| `PITCH` | JDN span per helix turn | `36524` (≈ one Gregorian π-day's mean spacing → one turn ≈ one expected single date) *(proposed)* |
+| `SAFE_MIN`, `SAFE_MAX` | the finite band (must stay `< 2^53`) | `0` (JDN 0 ≈ 4713 BCE), **`1e9`** (≈ year 2.7 M) — season-0 brackets both verified doubles ✅ |
+| `GENESIS` | the BC/AD boundary reference for the ledger label | **`1721426`** (JDN of 1 CE) ✅ |
+| `PITCH` | JDN span per helix turn | **`36524`** (≈ one Gregorian π-day's mean spacing → one turn ≈ one expected single date) ✅ |
 | `MAX_TURNS` | clock cap (anti-slack) | **`124`** (31×4) ✅ |
 | `DIRECTION_RATIO` | the threshold in the BC/AD rule | **`0.1`** ✅ |
 | `QUALIFYING_DEPTH` | minimum π-depth for a catch | **`5`** (`31415`) ✅ |
 | `FORTUNES` | penalty/bonus factors (§3a), append-only | as tabled in §3a ✅ |
 | `rulebook/` | append-only allowed conventions + gear whitelist | v1: orderings `mm-dd-yy` / `yy-m-dd` / `yyyy-mm-dd`; gears `gregorian` / `julian` / `islamic` |
+
+**Genesis attestation.** The season-0 parameters `SAFE_MAX=1e9`, `PITCH=36524`, `GENESIS=1721426` were
+locked by a PGP-signed operator order, verified GOODSIG/VALIDSIG against the pinned anchor
+`8485 1771 EDC3 649E 47D3 9F0F 0A00 A3FA AB26 EAB5` (fleet@gegge.org). Fitting for an append-only rulebook:
+its founding constants are cryptographically attested, so no one can later claim they drifted.
 
 **Cost (measured, f=124):** the search over a ~124·PITCH ≈ 4.5 M-day window is **~1–3 ms** (residue
 enumeration + verification); gear compilation (~150 ms) is one-time and precomputed. The CI runner's own
