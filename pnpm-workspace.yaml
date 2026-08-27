@@ -4,3 +4,10 @@ packages:
 allowBuilds:
   esbuild: true
   sharp: true
+# Security overrides — force patched transitive versions past Dependabot's stuck pins.
+# nanoid CVE-2026-67213 (CWE-835 infinite loop at size 0), js-yaml GHSA-5p4m-2wfm-xmqj (CWE-407 quadratic
+# DoS), postcss CVE-2026-69153 (CWE-22 path traversal). Ranged selectors touch only the vulnerable spans.
+overrides:
+  'nanoid@<3.3.18': '^3.3.18'
+  'js-yaml@>=4.0.0 <4.3.1': '^4.3.1'
+  'postcss@<8.5.23': '^8.5.23'
