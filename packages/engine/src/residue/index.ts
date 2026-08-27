@@ -3,7 +3,7 @@
 // each one independently. No raw-date scan in the witness path.
 export { compileGear, type Gear } from './compile';
 export { witnessJdns } from './witness';
-export { verifyWitness } from './verify';
+export { verifyWitness, readDepth } from './verify';
 export {
   gcd,
   lcm,

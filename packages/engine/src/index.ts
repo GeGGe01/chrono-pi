@@ -6,6 +6,18 @@ export { PI_DIGITS, matchDepth } from './pi';
 export { eachJdn, isoToJdn, jdnToIso } from './jdn';
 export { clockDigits, FRACTIONAL_PI_INSTANT, STANDARD_PI_INSTANT } from './clock';
 
+export { reckon, fortunes, SEASON0 } from './reckon';
+export type {
+  ReckonInput,
+  ReckonResult,
+  Catch,
+  Reading,
+  Direction,
+  MergeFacts,
+  Fortune,
+  FortuneResult,
+} from './reckon';
+
 export { clearCalendars, getCalendar, listCalendars, registerCalendar } from './calendars/registry';
 export {
   clearReckonings,
