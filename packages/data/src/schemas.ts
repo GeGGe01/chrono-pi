@@ -65,6 +65,10 @@ export const collisionSearchSchema = z.object({
   mechanics: collisionSearchMechanicsSchema.optional(),
   model: z.string().optional(),
   note: z.string().optional(),
+  // When this witness was first confirmed, as an ISO-8601 UTC instant. Recorded once at
+  // confirmation (never Date.now() at build — that would break the deterministic artifacts);
+  // absent until a search run stamps it. Displayed as "Confirmed … UTC".
+  foundAt: z.string().datetime().optional(),
 });
 
 export const collisionSearchesArtifactSchema = z.object({

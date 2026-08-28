@@ -1,24 +1,39 @@
 ---
 import type { PerfectDay } from 'chrono-pi-data';
 
+import { witnessReading } from '../lib/view';
+
 interface Props {
   days: PerfectDay[];
 }
 
 const { days } = Astro.props;
+const rows = days.map((day) => ({ day, r: witnessReading(day) }));
 ---
 
 <section class="upcoming">
   <h2>Upcoming</h2>
+  <p class="anchor-legend">
+    Dates are each calendar's own reading of the same day. Anchored to <strong>Gregorian</strong>.
+  </p>
   <ol>
     {
-      days.map((day) => (
+      rows.map(({ day, r }) => (
         <li data-calendar={day.calendarId}>
-          <time datetime={day.isoDate}>{day.isoDate}</time>
-          <span class="cal">{day.calendarId}</span>
+          <time datetime={day.isoDate}>{r.nativeIso}</time>
+          <span class="cal">
+            {day.calendarId}
+            {r.isAnchor && <span class="anchor-tag">anchor</span>}
+          </span>
           <span class="reck">{day.reckoningId}</span>
-          <span class="digits">{day.digits}</span>
+          <span class="digits">{r.segments.join('·')}</span>
           <span class="depth">π·{day.depth}</span>
+          {!r.isAnchor && (
+            <span class="note">
+              same day as Gregorian <span class="mono">{r.anchorIso}</span>
+              {r.showOffset && ` — ${day.calendarId} runs ${r.offsetDays} days behind Gregorian`}
+            </span>
+          )}
         </li>
       ))
     }
@@ -26,20 +41,30 @@ const { days } = Astro.props;
 </section>
 
 <style>
+  .anchor-legend {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+  }
   ol {
     list-style: none;
     padding: 0;
-    margin-top: 1.25rem;
+    margin-top: 1rem;
     border-top: 1px solid var(--line);
   }
   li {
     display: grid;
-    grid-template-columns: 7rem 1fr auto;
-    grid-template-areas: 'date cal depth' 'date reck digits';
+    grid-template-columns: 8rem 1fr auto;
+    grid-template-areas: 'date cal depth' 'date reck digits' 'note note note';
     gap: 0.1rem 1rem;
     align-items: baseline;
     padding-block: 0.85rem;
     border-bottom: 1px solid var(--line);
+  }
+  /* A deselected calendar hides its rows. `[hidden]` alone is display:none, but the `li` rule's
+     explicit `display: grid` would override it — so the toggle needs this to actually remove the row. */
+  li[hidden] {
+    display: none;
   }
   time {
     grid-area: date;
@@ -49,6 +74,19 @@ const { days } = Astro.props;
   .cal {
     grid-area: cal;
     font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .anchor-tag {
+    font-weight: 500;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-2);
+    border: 1px solid var(--line);
+    border-radius: 0.35rem;
+    padding: 0 0.35rem;
   }
   .reck {
     grid-area: reck;
@@ -58,6 +96,7 @@ const { days } = Astro.props;
   .digits {
     grid-area: digits;
     text-align: right;
+    font-family: var(--mono);
   }
   .depth {
     grid-area: depth;
@@ -65,10 +104,19 @@ const { days } = Astro.props;
     color: var(--muted);
     font-size: 0.8rem;
   }
+  .note {
+    grid-area: note;
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 0.2rem;
+  }
+  .note .mono {
+    font-family: var(--mono);
+  }
   @media (max-width: 32rem) {
     li {
       grid-template-columns: 1fr auto;
-      grid-template-areas: 'date depth' 'cal digits' 'reck reck';
+      grid-template-areas: 'date depth' 'cal digits' 'reck reck' 'note note';
     }
   }
 </style>

@@ -1,12 +1,17 @@
 ---
 interface Props {
-  calendars: string[]; // available calendar ids, already in display order
+  // Calendars in display order. `found: false` means the engine has no perfect day for it yet
+  // (e.g. Persian isn't implemented) — it shows greyed as "until further notice", not toggleable.
+  calendars: { id: string; found: boolean }[];
 }
 
 const { calendars } = Astro.props;
 
 // Pre-selected on first visit; the cookie overrides thereafter.
 const DEFAULTS = ['gregorian', 'julian', 'islamic', 'persian'];
+// The anchor calendar — the reference all dates are read against. Locked on (pre-checked, not
+// unclickable) for now; a future feature lets the visitor re-anchor.
+const ANCHOR = 'gregorian';
 
 const LABELS: Record<string, string> = { islamic: 'Hijri', 'julian-period': 'Julian Period' };
 const label = (id: string) => LABELS[id] ?? id.charAt(0).toUpperCase() + id.slice(1);
@@ -14,13 +19,25 @@ const label = (id: string) => LABELS[id] ?? id.charAt(0).toUpperCase() + id.slic
 
 <details class="calfilter" open>
   <summary>Calendars shown</summary>
-  <p class="hint">Pick which calendars appear below. Your choice is remembered on this device.</p>
+  <p class="hint">
+    Pick which calendars appear below. <strong>Gregorian</strong> is the anchor — always shown.
+  </p>
   <div class="opts">
     {
-      calendars.map((id) => (
-        <label>
-          <input type="checkbox" data-cal-toggle value={id} checked={DEFAULTS.includes(id)} />
-          <span>{label(id)}</span>
+      calendars.map(({ id, found }) => (
+        <label class:list={['opt', { pending: !found }]}>
+          <input
+            type="checkbox"
+            data-cal-toggle
+            value={id}
+            checked={found && (id === ANCHOR || DEFAULTS.includes(id))}
+            disabled={id === ANCHOR || !found}
+          />
+          <span>
+            {label(id)}
+            {id === ANCHOR && found && <span class="anchor-tag">anchor</span>}
+            {!found && <span class="pending-tag">until further notice</span>}
+          </span>
         </label>
       ))
     }
@@ -32,6 +49,7 @@ const label = (id: string) => LABELS[id] ?? id.charAt(0).toUpperCase() + id.slic
   // [data-calendar] element accordingly. No server round-trip — the site stays static.
   const COOKIE = 'chrono_cals';
   const DEFAULTS = ['gregorian', 'julian', 'islamic', 'persian'];
+  const ANCHOR = 'gregorian'; // always shown — the reference calendar, cannot be toggled off
   const TEN_YEARS = 60 * 60 * 24 * 365 * 10;
 
   function readCookie(): string[] | null {
@@ -53,16 +71,19 @@ const label = (id: string) => LABELS[id] ?? id.charAt(0).toUpperCase() + id.slic
   }
 
   const inputs = Array.from(document.querySelectorAll<HTMLInputElement>('[data-cal-toggle]'));
-  const stored = readCookie() ?? DEFAULTS;
+  // The anchor is always in the set, whatever the cookie says.
+  const stored = Array.from(new Set([ANCHOR, ...(readCookie() ?? DEFAULTS)]));
   const storedSet = new Set(stored);
   inputs.forEach((i) => {
-    i.checked = storedSet.has(i.value);
+    i.checked = i.value === ANCHOR || storedSet.has(i.value);
   });
   apply(stored);
 
   inputs.forEach((i) =>
     i.addEventListener('change', () => {
-      const ids = inputs.filter((x) => x.checked).map((x) => x.value);
+      const ids = Array.from(
+        new Set([ANCHOR, ...inputs.filter((x) => x.checked).map((x) => x.value)]),
+      );
       writeCookie(ids);
       apply(ids);
     }),
@@ -98,5 +119,30 @@ const label = (id: string) => LABELS[id] ?? id.charAt(0).toUpperCase() + id.slic
   }
   input {
     accent-color: var(--accent);
+  }
+  .anchor-tag {
+    margin-left: 0.35rem;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-2);
+    border: 1px solid var(--line);
+    border-radius: 0.35rem;
+    padding: 0 0.3rem;
+  }
+  /* Calendars the engine hasn't found a perfect day for yet: greyed and locked off. */
+  .opt.pending {
+    color: var(--muted);
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .opt.pending input {
+    cursor: not-allowed;
+  }
+  .pending-tag {
+    margin-left: 0.35rem;
+    font-size: 0.62rem;
+    font-style: italic;
+    color: var(--muted);
   }
 </style>

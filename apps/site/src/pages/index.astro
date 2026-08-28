@@ -19,14 +19,22 @@ const now = new Date().toISOString().slice(0, 10);
 const next = nextPerfectDay(days, now);
 const upcoming = upcomingDays(days, now, 12);
 
-// The calendars a visitor can toggle: every one that appears in the data, with the four defaults first.
+// The calendars the filter shows. Two classes:
+//  - found:    the engine has ≥1 perfect day for it — toggleable.
+//  - pending:  a headline calendar we intend to support but haven't found a day for yet
+//              (e.g. Persian isn't implemented) — shown greyed as "until further notice".
+// The four defaults are always listed (as pending if not yet found) so the intent is visible.
 const CAL_ORDER = ['gregorian', 'julian', 'islamic', 'persian'];
-const availableCalendars = (() => {
-  const seen = new Set<string>();
-  for (const d of days) seen.add(d.calendarId);
-  for (const w of collisions.witnesses) for (const r of w.perfectDays) seen.add(r.calendarId);
+const DEFAULT_CALENDARS = ['gregorian', 'julian', 'islamic', 'persian'];
+const calendarChoices = (() => {
+  const found = new Set<string>();
+  for (const d of days) found.add(d.calendarId);
+  for (const w of collisions.witnesses) for (const r of w.perfectDays) found.add(r.calendarId);
+  const shown = new Set<string>([...found, ...DEFAULT_CALENDARS]);
   const rank = (id: string) => (CAL_ORDER.indexOf(id) === -1 ? CAL_ORDER.length : CAL_ORDER.indexOf(id));
-  return [...seen].sort((a, b) => rank(a) - rank(b) || a.localeCompare(b));
+  return [...shown]
+    .sort((a, b) => rank(a) - rank(b) || a.localeCompare(b))
+    .map((id) => ({ id, found: found.has(id) }));
 })();
 ---
 
@@ -41,7 +49,7 @@ const availableCalendars = (() => {
       <p>No more perfect pi-days inside the lifetime window.</p>
     )
   }
-  <CalendarFilter calendars={availableCalendars} />
+  <CalendarFilter calendars={calendarChoices} />
   <UpcomingQueue days={upcoming} />
   <Timeline days={days} windowStart={lifeWindow.start} windowEnd={lifeWindow.end} nowIso={now} />
   <HallOfFame collisions={collisions} searches={collisionSearches} />

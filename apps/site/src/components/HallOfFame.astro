@@ -31,6 +31,14 @@ function formatYears(years: number): string {
 function formatDays(days: number): string {
   return days.toLocaleString('en-US');
 }
+
+// A confirmed-at instant, shown in UTC so the stamp is timezone-free (the reckoning credits the
+// commit, not a person's local clock). Returns e.g. "2026-08-28 09:26 UTC".
+function formatFoundAt(iso: string): string {
+  const d = new Date(iso);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())} UTC`;
+}
 ---
 
 <section class="fame">
@@ -48,6 +56,11 @@ function formatDays(days: number): string {
           </div>
           <h3>{search.label}</h3>
           <p class="cdate">{search.isoDate}</p>
+          {search.foundAt && (
+            <p class="confirmed">
+              <span class="dot" /> Confirmed {formatFoundAt(search.foundAt)}
+            </p>
+          )}
           <p class="cals">{search.calendars.map((calendar) => calendar.label).join(' ∩ ')}</p>
 
           <ul class="reads">
@@ -152,6 +165,22 @@ function formatDays(days: number): string {
     color: var(--muted);
     font-size: 0.85rem;
     margin-top: 0.15rem;
+  }
+  .confirmed {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent-2);
+  }
+  .confirmed .dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--accent-2);
+    flex: none;
   }
   .reads {
     list-style: none;
