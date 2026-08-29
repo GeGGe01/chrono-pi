@@ -11,9 +11,13 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@astrojs/mdx": "^7.0.8",
     "astro": "^7.1.0",
     "chrono-pi-data": "workspace:*",
-    "chrono-pi-engine": "workspace:*"
+    "chrono-pi-engine": "workspace:*",
+    "katex": "^0.18.4",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

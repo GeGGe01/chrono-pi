@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import 'katex/dist/katex.min.css';
 
 import Layout from '../../layouts/Layout.astro';
 
@@ -10,36 +11,279 @@ export async function getStaticPaths() {
   return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
 }
 
+const base = import.meta.env.BASE_URL;
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+// Reading time from the raw source (~200 wpm), floored at 1 minute.
+const words = (post.body ?? '').trim().split(/\s+/).filter(Boolean).length;
+const readMinutes = Math.max(1, Math.round(words / 200));
+
+const isoDate = post.data.pubDate.toISOString().slice(0, 10);
+
+// "Read next": the other published posts, soonest-first, capped at two.
+const others = (await getCollection('blog', ({ data }) => !data.draft))
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 2);
 ---
 
 <Layout title={`${post.data.title} — chrono-pi`} description={post.data.description}>
-  <article>
-    <h2>{post.data.title}</h2>
-    <time datetime={post.data.pubDate.toISOString()}>
-      {post.data.pubDate.toISOString().slice(0, 10)}
-    </time>
-    <div class="prose">
-      <Content />
-    </div>
+  <article class="post">
+    <header class="hero row">
+      <p class="eyebrow">{post.data.category}</p>
+      <div class="hero-body">
+        <h1>{post.data.title}</h1>
+        <p class="lede">{post.data.description}</p>
+        <div class="meta">
+          <span
+            >By
+            <a href={post.data.authorUrl} target="_blank" rel="noopener" class="author">
+              {post.data.author}
+            </a></span
+          >
+          <span class="sep">/</span>
+          <time datetime={post.data.pubDate.toISOString()}>{isoDate}</time>
+          <span class="sep">/</span>
+          <span>{readMinutes} min read</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="row body-row">
+      <div class="rail"></div>
+      <div class="prose">
+        <Content />
+      </div>
+    </section>
+
+    {
+      others.length > 0 && (
+        <section class="row next-row">
+          <p class="eyebrow">Read next</p>
+          <ul class="next">
+            {others.map((p) => (
+              <li>
+                <a href={`${base}blog/${p.id}/`}>
+                  <span class="next-date">{p.data.pubDate.toISOString().slice(0, 10)}</span>
+                  <span class="next-title">{p.data.title}</span>
+                  <span class="next-desc">{p.data.description}</span>
+                  <span class="next-cat">{p.data.category}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
   </article>
 </Layout>
 
 <style>
-  article {
+  .post {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
   }
-  time {
+  /* Swiss two-column grid: a narrow label rail, then the content. Collapses on small screens. */
+  .row {
+    display: grid;
+    gap: 1rem 3rem;
+    grid-template-columns: 1fr;
+    border-bottom: 1px solid var(--line);
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  }
+  @media (min-width: 52rem) {
+    .row {
+      grid-template-columns: 11rem 1fr;
+    }
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
     color: var(--muted);
-    font-size: 0.8rem;
   }
+  .hero h1 {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 800;
+    line-height: 1.03;
+    letter-spacing: -0.045em;
+  }
+  .lede {
+    margin-top: 1.5rem;
+    max-width: 40rem;
+    font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .meta {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    border-top: 1px solid var(--line);
+    padding-top: 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .meta .author {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .meta .author:hover {
+    color: var(--fg);
+  }
+  .meta .sep {
+    color: var(--line);
+  }
+
+  /* Article body — the markdown/MDX render, styled as prose. */
   .prose {
+    max-width: 44rem;
+    color: color-mix(in srgb, var(--fg) 80%, var(--muted));
+    font-size: 1.075rem;
+    line-height: 1.75;
+  }
+  .prose :global(> * + *) {
+    margin-top: 1.35rem;
+  }
+  .prose :global(h2) {
+    margin-top: 2.75rem;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--fg);
+  }
+  .prose :global(h3) {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+  }
+  .prose :global(strong) {
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .prose :global(a) {
+    color: var(--accent);
+    text-underline-offset: 0.2em;
+  }
+  .prose :global(code) {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.35rem;
+    padding: 0.1em 0.4em;
+    color: var(--accent);
+  }
+  .prose :global(pre) {
+    margin-block: 2rem;
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.6rem;
+    padding: 1.25rem 1.4rem;
+  }
+  .prose :global(pre code) {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--fg);
+    font-size: 0.85rem;
+    line-height: 1.65;
+  }
+  .prose :global(blockquote) {
+    margin-block: 2.25rem;
+    border-left: 2px solid var(--accent);
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-style: italic;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    padding-left: 1.4rem;
+  }
+  .prose :global(li + li) {
+    margin-top: 0.6rem;
+  }
+  .prose :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+  /* KaTeX display blocks scroll rather than overflow the column. */
+  .prose :global(.katex-display) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: 0.5rem;
+  }
+
+  /* Read-next list. */
+  .next {
+    list-style: none;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    max-width: 42rem;
+    gap: 1px;
+  }
+  .next a {
+    display: grid;
+    gap: 0.35rem 1.5rem;
+    grid-template-columns: 1fr;
+    padding-block: 1.4rem;
+    border-top: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--fg);
+  }
+  .next li:last-child a {
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 52rem) {
+    .next a {
+      grid-template-columns: 6rem 1fr 7rem;
+      align-items: baseline;
+    }
+  }
+  .next-date {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .next-title {
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+  .next a:hover .next-title {
+    color: var(--accent);
+  }
+  .next-desc {
+    grid-column: 2;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .next-cat {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    justify-self: start;
+  }
+  @media (min-width: 52rem) {
+    .next-cat {
+      justify-self: end;
+    }
+    .next-desc {
+      grid-column: 2;
+    }
   }
 </style>

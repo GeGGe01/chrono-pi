@@ -4,6 +4,7 @@ import { getCollisionSearches, getCollisions, getPerfectDays } from 'chrono-pi-d
 import CalendarFilter from '../components/CalendarFilter.astro';
 import Countdown from '../components/Countdown.astro';
 import HallOfFame from '../components/HallOfFame.astro';
+import LatestWriting from '../components/LatestWriting.astro';
 import PiStream from '../components/PiStream.astro';
 import Timeline from '../components/Timeline.astro';
 import UpcomingQueue from '../components/UpcomingQueue.astro';
@@ -53,4 +54,5 @@ const calendarChoices = (() => {
   <UpcomingQueue days={upcoming} />
   <Timeline days={days} windowStart={lifeWindow.start} windowEnd={lifeWindow.end} nowIso={now} />
   <HallOfFame collisions={collisions} searches={collisionSearches} />
+  <LatestWriting />
 </Layout>

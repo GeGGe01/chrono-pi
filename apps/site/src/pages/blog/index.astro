@@ -15,17 +15,27 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, 
 ---
 
 <Layout title="Blog — chrono-pi" description="Essays and the mathematics behind the engine.">
-  <section>
-    <h2>Blog</h2>
+  <section class="archive">
+    <header class="head">
+      <p class="eyebrow">Writing</p>
+      <div>
+        <h1>The archive</h1>
+        <p class="lede">Essays and the mathematics behind the engine.</p>
+      </div>
+    </header>
+
     <ul class="posts">
       {
         posts.map((post) => (
           <li>
-            <a href={`${base}blog/${post.id}/`}>{post.data.title}</a>
-            <p>{post.data.description}</p>
-            <time datetime={post.data.pubDate.toISOString()}>
-              {post.data.pubDate.toISOString().slice(0, 10)}
-            </time>
+            <a href={`${base}blog/${post.id}/`}>
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toISOString().slice(0, 10)}
+              </time>
+              <span class="title">{post.data.title}</span>
+              <span class="desc">{post.data.description}</span>
+              <span class="cat">{post.data.category}</span>
+            </a>
           </li>
         ))
       }
@@ -34,28 +44,89 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort((a, 
 </Layout>
 
 <style>
+  .head {
+    display: grid;
+    gap: 1rem 3rem;
+    grid-template-columns: 1fr;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+  @media (min-width: 52rem) {
+    .head {
+      grid-template-columns: 11rem 1fr;
+    }
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  h1 {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.045em;
+  }
+  .lede {
+    margin-top: 1rem;
+    color: var(--muted);
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  }
+
   .posts {
     list-style: none;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+    margin-top: 0.5rem;
   }
   .posts a {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--fg);
+    display: grid;
+    gap: 0.35rem 3rem;
+    grid-template-columns: 1fr;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line);
     text-decoration: none;
+    color: var(--fg);
   }
-  .posts a:hover {
-    color: var(--accent);
-  }
-  .posts p {
-    color: var(--muted);
-    margin: 0.25rem 0;
+  @media (min-width: 52rem) {
+    .posts a {
+      grid-template-columns: 7rem 1fr 8rem;
+      align-items: baseline;
+    }
   }
   .posts time {
+    font-family: var(--mono);
+    font-size: 0.78rem;
     color: var(--muted);
-    font-size: 0.8rem;
+  }
+  .posts .title {
+    font-size: clamp(1.35rem, 3.5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+  }
+  .posts a:hover .title {
+    color: var(--accent);
+  }
+  .posts .desc {
+    grid-column: 2;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 40rem;
+  }
+  .posts .cat {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    justify-self: start;
+  }
+  @media (min-width: 52rem) {
+    .posts .cat {
+      justify-self: end;
+    }
   }
 </style>

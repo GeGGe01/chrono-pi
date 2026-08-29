@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+
+// The homepage's writing lane: a separate flow from the live search feed above it, on the same page.
+// Surfaces the three most recent essays; the full set lives at /blog.
+const base = import.meta.env.BASE_URL;
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => {
+    const ao = a.data.order ?? Number.POSITIVE_INFINITY;
+    const bo = b.data.order ?? Number.POSITIVE_INFINITY;
+    if (ao !== bo) return ao - bo;
+    return b.data.pubDate.getTime() - a.data.pubDate.getTime();
+  })
+  .slice(0, 3);
+---
+
+{
+  posts.length > 0 && (
+    <section class="writing">
+      <div class="head">
+        <div>
+          <p class="eyebrow">From the blog</p>
+          <h2>Latest writing</h2>
+        </div>
+        <a class="all" href={`${base}blog/`}>
+          All essays →
+        </a>
+      </div>
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <a href={`${base}blog/${post.id}/`}>
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toISOString().slice(0, 10)}
+              </time>
+              <span class="title">{post.data.title}</span>
+              <span class="desc">{post.data.description}</span>
+              <span class="cat">{post.data.category}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent-2);
+    margin-bottom: 0.35rem;
+  }
+  .all {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .all:hover {
+    color: var(--fg);
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+  ul a {
+    display: grid;
+    gap: 0.25rem 2rem;
+    grid-template-columns: 1fr;
+    padding-block: 1.2rem;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--fg);
+  }
+  @media (min-width: 42rem) {
+    ul a {
+      grid-template-columns: 6.5rem 1fr 7rem;
+      align-items: baseline;
+    }
+  }
+  time {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+  ul a:hover .title {
+    color: var(--accent);
+  }
+  .desc {
+    grid-column: 2;
+    color: var(--muted);
+    font-size: 0.88rem;
+    max-width: 38rem;
+  }
+  .cat {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    justify-self: start;
+  }
+  @media (min-width: 42rem) {
+    .cat {
+      justify-self: end;
+    }
+  }
+</style>

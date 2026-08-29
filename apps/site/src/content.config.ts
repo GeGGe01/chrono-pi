@@ -1,12 +1,12 @@
 import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
 
-// The blog: essays and the mathematics behind the engine, authored as Markdown in src/content/blog.
-// The glob loader picks up every *.md file; the schema below is the contract each post's frontmatter
-// must satisfy (validated at build time). Math rendering (MDX/KaTeX) lands in a follow-up (#24); the
-// three theorem posts (Kalenderkrockssatsen, Tågrälssatsen, Tibiasatsen) land in #25.
+// The blog: essays and the mathematics behind the engine, authored as Markdown/MDX in
+// src/content/blog. The glob loader picks up every *.md and *.mdx file; the schema below is the
+// contract each post's frontmatter must satisfy (validated at build time). Math renders via KaTeX
+// (see astro.config.mjs); the three theorem posts land in #25.
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -16,6 +16,11 @@ const blog = defineCollection({
     // Explicit ordering hint; posts without one fall back to reverse-chronological.
     order: z.number().optional(),
     draft: z.boolean().default(false),
+    // Byline + section, surfaced in the Swiss-editorial article header. Author defaults to the site
+    // owner; `authorUrl` links the byline (GitHub). `category` is the eyebrow label (e.g. 'Mathematics').
+    author: z.string().default('GeGGe'),
+    authorUrl: z.string().url().default('https://github.com/GeGGe01'),
+    category: z.string().default('Essay'),
   }),
 });
 
