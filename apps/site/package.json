@@ -15,7 +15,7 @@
     "astro": "^7.1.0",
     "chrono-pi-data": "workspace:*",
     "chrono-pi-engine": "workspace:*",
-    "katex": "^0.18.4",
+    "katex": "^0.18.7",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0"
   },
