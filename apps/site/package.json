@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@astrojs/mdx": "^7.0.8",
+    "@astrojs/mdx": "^8.0.2",
     "astro": "^7.2.8",
     "chrono-pi-data": "workspace:*",
     "chrono-pi-engine": "workspace:*",
